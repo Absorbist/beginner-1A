@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 1 · Greetings · Interactive Lesson (A1, 12 y.o.)</title>
+<!--
+  IMAGE MAP (teacher's files):
+  Screen 1 hero ............ assets/images/1A_00.png
+  Screen 2 warm-up ......... assets/images/1A_01.png
+  Screen 3 Act 1 zones ..... assets/images/goodbuy.png | hello.png | just_a_minute.png | nice_to_meet_you.png | whats_your_name.png
+  Screen 3 Act 2 zones ..... assets/images/instructions/watch.png | read.png | repeat.png | practise.png | write.png | match.png
+  Screen 4 photo zones ..... assets/images/Dialogue-A.png | Dialogue-B.png | Dialogue-C.png | Dialogue-D.png
+  Screen 5 Act 1 boxes ..... assets/images/pronouns/I.png | you.png
+  If any file is missing, the page automatically falls back to a built-in illustration.
+-->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/nunito@latest/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/nunito@latest/600.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/nunito@latest/700.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/nunito@latest/800.css">
+<style>
+:root{
+  --pur:#7b2fbe; --pur-d:#5d1f96; --pur-l:#f3eefc; --pur-m:#e4d8f7;
+  --ink:#2b2436; --mut:#6f6880; --ok:#188038; --ok-bg:#e6f4ea; --ok-bd:#9fd3ae;
+  --err:#d93025; --err-bg:#fdecea; --card:#ffffff; --bg:#f7f4fb; --line:#e6def2;
+  --r:16px; --sh:0 6px 18px rgba(90,60,140,.10);
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{font-family:'Nunito',system-ui,Segoe UI,sans-serif; background:var(--bg); color:var(--ink); font-size:17.5px; line-height:1.5; padding-bottom:86px}
+.wrap{max-width:1060px; margin:0 auto; padding:18px 16px 30px}
+h1,h2,h3,h4{margin:.2em 0 .4em; line-height:1.2}
+.screen{display:none}
+.screen.on{display:block; animation:fade .35s ease}
+@keyframes fade{from{opacity:0; transform:translateY(8px)}to{opacity:1;transform:none}}
+.stage{display:inline-block; background:var(--pur-m); color:var(--pur-d); font-weight:800; font-size:13px; letter-spacing:.08em; text-transform:uppercase; padding:5px 14px; border-radius:999px}
+.timechip{float:right; background:#fff; border:1.5px solid var(--line); color:var(--mut); font-weight:700; font-size:13px; padding:5px 12px; border-radius:999px; margin-top:6px}
+.scrtitle{font-size:clamp(24px,4vw,34px); font-weight:800; color:var(--pur-d)}
+.topbar{position:sticky; top:0; z-index:40; background:rgba(247,244,251,.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--line)}
+.topbar .in{max-width:1060px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:10px 16px}
+.brand{font-weight:800;color:var(--pur-d);font-size:16px;white-space:nowrap}
+.dots{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+.dot{width:28px;height:28px;border-radius:50%;border:2px solid #c9b8e8;background:#fff;color:var(--pur-d);font-weight:800;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s}
+.dot:hover{background:var(--pur-l)}
+.dot.cur{background:var(--pur);border-color:var(--pur);color:#fff}
+.dot:focus-visible,.btn:focus-visible,.chip:focus-visible,.opt:focus-visible,.cw:focus-visible,.wtok:focus-visible{outline:3px solid #c58cff;outline-offset:2px}
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:20px}
+.overview{background:linear-gradient(120deg,#efe6ff,#e8f4ff);border:1.5px solid #d9c8f5;border-radius:var(--r);padding:18px 20px;font-size:19px;font-weight:600}
+.overview b{color:var(--pur-d)}
+.cards2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0}
+@media(max-width:760px){.cards2{grid-template-columns:1fr}}
+.refcard{border:2.5px solid var(--pur-m);background:#fff;border-radius:var(--r);padding:22px;font:inherit;font-size:21px;font-weight:800;color:var(--pur-d);cursor:pointer;display:flex;align-items:center;gap:14px;transition:.15s;box-shadow:var(--sh);text-align:left}
+.refcard .ico{font-size:34px}
+.refcard:hover{background:var(--pur-l);transform:translateY(-2px)}
+.refcard.active{background:var(--pur);border-color:var(--pur);color:#fff;box-shadow:0 8px 22px rgba(123,47,190,.35)}
+.refsec{display:none;margin-top:4px}
+.refsec.on{display:block;animation:fade .25s ease}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.vitem{border:2px solid var(--pur-m);background:#fff;border-radius:12px;padding:10px 12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;font-size:16px;transition:.12s;font-family:inherit;text-align:left}
+.vitem:hover{background:var(--pur-l);border-color:var(--pur)}
+.vitem .em{font-size:20px}
+.vitem.hid{display:none}
+.cat-h{grid-column:1/-1;font-size:14px;font-weight:800;color:var(--mut);text-transform:uppercase;letter-spacing:.06em;margin:6px 0 0}
+.cw{border-bottom:2.5px dotted var(--pur);color:inherit;font-weight:700;cursor:pointer;border-radius:3px}
+.cw:hover{background:var(--pur-l)}
+.mini{width:22px;height:22px;border-radius:50%;background:var(--pur);color:#fff;font-size:12px;font-weight:800;cursor:pointer;line-height:1;margin-left:6px;flex:none;display:inline-flex;align-items:center;justify-content:center;user-select:none}
+.mini:hover{background:var(--pur-d)}
+.gtable{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;box-shadow:var(--sh);font-size:17px}
+.gtable th,.gtable td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.gtable th{background:var(--pur);color:#fff;font-weight:800}
+.gtable td:first-child{font-weight:800;color:var(--pur-d);white-space:nowrap}
+.gtable .small{display:block;margin-top:5px;font-weight:600}
+.gtable td:first-child{font-size:20px}
+.hl{background:#fff3bf;padding:1px 5px;border-radius:5px;font-weight:800}
+.notebox{background:#eef6ff;border:1.5px solid #bcd7f5;border-radius:12px;padding:12px 16px;margin-top:14px}
+.notebox b{color:#145da0}
+.act{background:#fff;border-radius:var(--r);box-shadow:var(--sh);padding:18px;margin-top:18px;position:relative}
+.acthead{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.acthead h3{margin:0;font-size:19px;color:var(--pur-d)}
+.rst{border:2px solid var(--pur-m);background:#fff;color:var(--pur-d);font:inherit;font-weight:800;font-size:14px;border-radius:999px;padding:6px 16px;cursor:pointer}
+.rst:hover{background:var(--pur-l)}
+.instr{margin:8px 0 14px;font-weight:600;color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+.chip{border:2px solid #b79ce0;background:var(--pur-l);border-radius:999px;padding:10px 16px;font-weight:800;font-size:16.5px;color:var(--pur-d);cursor:grab;display:inline-flex;align-items:center;transition:.12s;touch-action:manipulation;user-select:none}
+.chip:hover{background:var(--pur-m)}
+.chip:active{cursor:grabbing}
+.chip.sel{outline:3px solid var(--pur);background:#e5d6fb}
+.chip.locked{background:var(--ok-bg);border-color:var(--ok-bd);color:var(--ok);cursor:default;outline:none}
+.chip.errf{animation:shake .4s;background:var(--err-bg);border-color:var(--err);color:var(--err)}
+@keyframes shake{10%,90%{transform:translateX(-2px)}20%,80%{transform:translateX(3px)}30%,50%,70%{transform:translateX(-5px)}40%,60%{transform:translateX(5px)}}
+.zones{display:grid;gap:14px}
+.zones.c2{grid-template-columns:1fr 1fr}.zones.c3{grid-template-columns:repeat(3,1fr)}.zones.c4{grid-template-columns:repeat(4,1fr)}.zones.c5{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+@media(max-width:820px){.zones.c4,.zones.c3{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.zones.c4,.zones.c3,.zones.c2{grid-template-columns:1fr}}
+.zone{border:2.5px dashed #c4b3e6;border-radius:14px;min-height:120px;padding:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;background:#fbf9ff;cursor:pointer;transition:.15s;text-align:center;overflow:hidden;align-content:center}
+.zone:hover{background:var(--pur-l)}
+.zone .zlabel{font-weight:800;color:var(--pur-d);font-size:15px}
+.zone svg{width:100%;height:150px}
+.zone.multi{flex-direction:row;align-content:flex-start;justify-content:center;min-height:150px}
+.zone.multi .zlabel,.zone.multi .small{width:100%}
+.zone .chip{cursor:default;margin:2px;font-size:15px;padding:8px 13px}
+.zimg{width:100%;height:150px;object-fit:cover;border-radius:10px;background:#fff}
+.zimg.contain{object-fit:contain;height:110px}
+.zimg.tall{height:170px}
+.zone.locked{border-style:solid;border-color:var(--ok-bd);background:var(--ok-bg);cursor:default}
+.zone.errf{animation:shake .4s;background:var(--err-bg);border-color:var(--err)}
+.badge{position:absolute;top:8px;left:8px;background:var(--pur);color:#fff;width:26px;height:26px;border-radius:50%;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;z-index:2}
+.zwrap{position:relative}
+.qrow{background:#fbf9ff;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:12px}
+.qrow .sent{font-size:18px;font-weight:600}
+.blank{display:inline-block;min-width:76px;border-bottom:3px dotted var(--pur);text-align:center;font-weight:800;color:var(--ok);padding:0 4px}
+.opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.opt{border:2px solid #d8cdf0;background:#fff;border-radius:10px;padding:8px 14px;font:inherit;font-weight:800;font-size:15.5px;color:var(--ink);cursor:pointer;transition:.12s}
+.opt:hover{background:var(--pur-l);border-color:var(--pur)}
+.opt.locked{background:var(--ok-bg);border-color:var(--ok-bd);color:var(--ok);cursor:default}
+.opt.errf{animation:shake .4s;background:var(--err-bg);border-color:var(--err);color:var(--err)}
+.qrow.done{border-color:var(--ok-bd);background:var(--ok-bg)}
+.pool{display:flex;flex-wrap:wrap;gap:8px;min-height:46px;padding:8px;border:2px dashed #c4b3e6;border-radius:12px;background:#fbf9ff}
+.ansrow{display:flex;flex-wrap:wrap;gap:8px;min-height:52px;padding:8px;border-radius:12px;background:var(--pur-l);border:2px solid var(--pur-m);margin:10px 0}
+.wtok{border:2px solid #b79ce0;background:#fff;border-radius:10px;padding:8px 13px;font:inherit;font-weight:800;font-size:16px;color:var(--pur-d);cursor:pointer}
+.wtok.in{background:var(--pur-m)}
+.ansrow.locked{background:var(--ok-bg);border-color:var(--ok-bd)}
+.ansrow.locked .wtok{border-color:var(--ok-bd);color:var(--ok);background:#fff;cursor:default}
+.ansrow.errf{animation:shake .4s;border-color:var(--err);background:var(--err-bg)}
+.winput{border:2px solid #d8cdf0;border-radius:10px;padding:8px 12px;font:inherit;font-size:17px;font-weight:700;width:150px;background:#fff;color:var(--ink)}
+.winput:focus{outline:none;border-color:var(--pur)}
+.winput.locked{background:var(--ok-bg);border-color:var(--ok-bd);color:var(--ok)}
+.winput.errf{animation:shake .4s;background:var(--err-bg);border-color:var(--err)}
+.hint{font-size:13.5px;color:var(--mut);font-weight:600}
+.result{display:none;margin-top:14px;padding:11px 16px;border-radius:12px;background:var(--ok-bg);border:1.5px solid var(--ok-bd);color:var(--ok);font-weight:800}
+.result.on{display:block;animation:fade .3s}
+.btn{border:none;border-radius:999px;background:var(--pur);color:#fff;font:inherit;font-weight:800;font-size:17px;padding:12px 26px;cursor:pointer;box-shadow:0 4px 12px rgba(123,47,190,.3);transition:.15s}
+.btn:hover{background:var(--pur-d);transform:translateY(-1px)}
+.btn.ghost{background:#fff;color:var(--pur-d);border:2px solid var(--pur-m);box-shadow:none}
+.btn.ghost:hover{background:var(--pur-l)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.spk{width:38px;height:38px;border-radius:50%;border:none;background:var(--pur);color:#fff;font-size:17px;cursor:pointer;flex:none;box-shadow:0 3px 8px rgba(123,47,190,.3);transition:.12s}
+.spk:hover{background:var(--pur-d);transform:scale(1.06)}
+.spk.sm{width:30px;height:30px;font-size:14px}
+.spk.ltr{width:42px;height:42px;border-radius:10px;font-size:16px;font-weight:800}
+.ltrgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(46px,1fr));gap:8px}
+.navbar{position:fixed;bottom:0;left:0;right:0;z-index:50;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border-top:1.5px solid var(--line)}
+.navbar .in{max-width:1060px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px}
+.navinfo{font-weight:800;color:var(--mut);font-size:14px}
+.overlay{position:fixed;inset:0;background:rgba(35,22,58,.55);z-index:100;display:none;align-items:center;justify-content:center;padding:18px}
+.overlay.on{display:flex;animation:fade .2s}
+.vcard{background:#fff;border-radius:18px;max-width:540px;width:100%;max-height:88vh;overflow:auto;padding:22px;position:relative;box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.vclose{position:absolute;top:10px;right:10px;width:36px;height:36px;border-radius:50%;border:none;background:var(--pur-l);color:var(--pur-d);font-size:17px;font-weight:800;cursor:pointer}
+.vclose:hover{background:var(--pur-m)}
+.vtop{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.vimg{width:112px;height:112px;border-radius:14px;background:var(--pur-l);display:flex;align-items:center;justify-content:center;overflow:hidden;flex:none;font-size:56px;border:1.5px solid var(--pur-m)}
+.vimg svg{width:100%;height:100%}
+.vimg img{width:100%;height:100%;object-fit:cover}
+.vimg .dig{font-size:46px;font-weight:800;color:var(--pur)}
+.vimg .cal{font-size:20px;font-weight:800;color:var(--pur-d);background:#fff;border-radius:8px;padding:6px 8px;border:2px solid var(--pur-m)}
+.vword{font-size:24px;font-weight:800;color:var(--pur-d)}
+.vipa{color:var(--mut);font-weight:600}
+.vpos{display:inline-block;background:var(--pur-m);color:var(--pur-d);border-radius:999px;padding:2px 10px;font-size:12.5px;font-weight:800;margin-left:6px}
+.vdef{margin:12px 0 6px;font-size:17.5px}
+.vex{color:#444;background:#fbf9ff;border-radius:10px;padding:8px 12px;margin:6px 0;font-weight:600;border:1px solid var(--line)}
+.vtr{display:none;margin-top:10px;background:#fff8e6;border:1.5px solid #ecd9a8;border-radius:10px;padding:10px 14px;font-weight:700}
+.vtr.on{display:block;animation:fade .2s}
+.useful{background:#fff8e6;border:1.5px solid #ecd9a8;border-radius:var(--r);padding:14px 18px}
+.useful h4{margin:0 0 8px;color:#8a6d1b}
+.useful ul{margin:0;padding-left:20px;font-weight:700}
+.qlist{list-style:none;padding:0;margin:12px 0 0;counter-reset:q}
+.qlist li{counter-increment:q;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:12px 16px 12px 52px;margin-bottom:10px;position:relative;font-weight:600;font-size:18px}
+.qlist li::before{content:counter(q);position:absolute;left:12px;top:12px;width:28px;height:28px;border-radius:50%;background:var(--pur);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center}
+.convo{background:#fbf9ff;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:12px}
+.convo .ln{display:flex;gap:10px;margin:3px 0}
+.convo .sp{min-width:74px;font-weight:800;color:var(--pur-d)}
+.convo .sp.b{color:#0b7285}
+.cups{display:flex;gap:10px;align-items:flex-end;justify-content:center;padding:6px 0}
+.numgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:10px}
+.numchip{border:2px solid #bfe0bf;background:var(--ok-bg);border-radius:12px;padding:10px;display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:800;color:#1c7c3c;font-size:16px;user-select:none}
+.numchip:hover{background:#d8eedd}
+.numchip .n{background:#fff;border-radius:8px;padding:2px 8px;border:1.5px solid var(--ok-bd)}
+.daychip{border:2px solid #b79ce0;background:#fff;border-radius:999px;padding:9px 16px;font-weight:800;color:var(--pur-d);cursor:pointer;display:inline-flex;align-items:center;gap:8px;font-size:16px;user-select:none}
+.daychip:hover{background:var(--pur-l)}
+.rolecard{border:2.5px solid var(--pur-m);border-radius:var(--r);padding:16px;background:#fff}
+.rolecard h4{color:var(--pur-d)}
+.stepchk{display:flex;align-items:flex-start;gap:10px;padding:8px 10px;border-radius:10px;cursor:pointer;font-weight:600}
+.stepchk:hover{background:var(--pur-l)}
+.stepchk .box{width:24px;height:24px;flex:none;border:2.5px solid var(--pur);border-radius:7px;background:#fff;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px}
+.stepchk.on .box{background:var(--pur)}
+.stepchk.on{color:var(--ok)}
+textarea.hw{width:100%;min-height:170px;border:2px solid #d8cdf0;border-radius:12px;padding:12px;font:inherit;font-size:17px;resize:vertical}
+textarea.hw:focus{outline:none;border-color:var(--pur)}
+.checklist{background:var(--ok-bg);border:1.5px solid var(--ok-bd);border-radius:12px;padding:12px 16px;font-weight:700;color:#1c7c3c}
+.checklist li{margin:4px 0}
+.scene{border-radius:var(--r);overflow:hidden;box-shadow:var(--sh);background:#fdf3e7}
+.scene>svg{width:100%;height:auto}
+.scene img{width:100%;height:auto;max-height:440px;object-fit:cover;display:block}
+.stemimg{width:100%;max-width:220px;border-radius:12px;display:block;margin-bottom:8px}
+.grid2{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}
+@media(max-width:860px){.grid2{grid-template-columns:1fr}}
+.flexrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.mut{color:var(--mut)}
+.small{font-size:14.5px}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="in">
+  <span class="brand">☕ Unit 1 · Greetings</span>
+  <div class="dots" id="dots"></div>
+</div></div>
+
+<div class="wrap">
+
+<!-- ============ SCREEN 1 ============ -->
+<section class="screen on" id="s1">
+  <span class="timechip">≈ 5 min</span>
+  <span class="stage">Preparation</span>
+  <h1 class="scrtitle">Welcome! Get ready for your lesson</h1>
+  <div class="scene" style="margin:14px 0"><img src="assets/images/1A_00.png" data-fb="hero" alt="In a coffee shop: hello!"></div>
+  <div class="overview">
+    In this <span class="cw" data-v="lesson">lesson</span>, you will learn how to <span class="cw" data-v="greet">greet</span> <span class="cw" data-v="people">people</span> and <b>say goodbye</b> in a <span class="cw" data-v="coffee_shop">coffee shop</span> ☕.
+    You will also learn the <span class="cw" data-v="number">numbers</span> <b>0–10</b>, the <span class="cw" data-v="day">days</span> of the <span class="cw" data-v="week">week</span>, and the <span class="cw" data-v="verb">verb</span>
+    <b><i>be</i>: <i>I’m</i> / <i>you’re</i></b>.
+  </div>
+  <div class="cards2">
+    <button class="refcard" id="cardV" type="button"><span class="ico">📚</span> Vocabulary</button>
+    <button class="refcard" id="cardG" type="button"><span class="ico">🧠</span> Grammar: verb <i>be</i> (I / you)</button>
+  </div>
+
+  <div class="refsec" id="refV">
+    <div class="card">
+      <h3>📚 <span class="cw" data-v="vocabulary">Vocabulary</span> reference</h3>
+      <p class="small mut">Tap any <span class="cw" data-v="word">word</span> or <span class="cw" data-v="phrase">phrase</span> to see a <span class="cw" data-v="picture">picture</span>, the <span class="cw" data-v="transcription">transcription</span> /…/, British audio 🔊, a simple <span class="cw" data-v="definition">definition</span> and the <span class="cw" data-v="translation">translation</span>.</p>
+      <div class="vgrid" id="vgrid"></div>
+      <button class="btn ghost" id="showAll" type="button" style="margin-top:14px">Show full list</button>
+    </div>
+  </div>
+
+  <div class="refsec" id="refG">
+    <div class="card">
+      <h3>🧠 <span class="cw" data-v="grammar">Grammar</span> reference: <span class="cw" data-v="verb">verb</span> <i>be</i> — <i>I</i> and <i>you</i></h3>
+      <table class="gtable">
+        <tr><th></th><th><span class="cw" data-v="full_form">Full form</span></th><th><span class="cw" data-v="contraction">Contraction</span> (<span class="cw" data-v="short">short</span> form)</th></tr>
+        <tr><td>➕</td><td>I <span class="hl">am</span> Helen. / You <span class="hl">are</span> Tom.</td><td><span class="hl">I’m</span> Helen. / <span class="hl">You’re</span> Tom.</td></tr>
+        <tr><td>➖</td><td>I <span class="hl">am not</span> Ellen. / You <span class="hl">are not</span> Dom.</td><td><span class="hl">I’m not</span> Ellen. / <span class="hl">You aren’t</span> Dom. (or <span class="hl">You’re not</span>)</td></tr>
+        <tr><td>❓</td><td><span class="hl">Am</span> I in class 2? / <span class="hl">Are</span> you Mike?</td><td>Yes, I <span class="hl">am</span>. / No, I’m <span class="hl">not</span>. / Yes, you <span class="hl">are</span>. / No, you <span class="hl">aren’t</span>.</td></tr>
+      </table>
+      <div class="notebox">
+        <b><span class="cw" data-v="word_order">Word order</span> in questions:</b> the verb <i>be</i> goes <b><span class="cw" data-v="before">before</span></b> the <span class="cw" data-v="person">person</span>.<br>
+        <span class="hl">I’m</span> in class 2. → <span class="hl">Am I</span> in class 2? &nbsp;•&nbsp;
+        <span class="hl">You’re</span> Tom. → <span class="hl">Are you</span> Tom?
+      </div>
+      <div class="notebox" style="background:#fdf0f5;border-color:#ecc3d8">
+        <b style="color:#b03060">Say:</b> <span class="cw" data-v="contraction">I’m</span> Helen. &nbsp;
+        <b style="color:#b03060">NOT</b> <s>I Helen.</s> &nbsp; <b style="color:#b03060">NOT</b> <s>Am Helen.</s>
+      </div>
+      <p style="margin-top:12px" class="small mut">Examples from our lesson: “<span class="cw" data-v="hello">Hello</span>. <span class="cw" data-v="name_q">Are you Helen?</span>” • “Yes, I am. And <span class="cw" data-v="contraction">you’re</span> Tom.” • “No, <span class="cw" data-v="sorry">I’m not</span>. I’m Helen.”</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SCREEN 2 ============ -->
+<section class="screen" id="s2">
+  <span class="timechip">≈ 7 min</span>
+  <span class="stage">Warm-up</span>
+  <h1 class="scrtitle">What can you see in the café?</h1>
+  <p class="instr">Look at the <span class="cw" data-v="picture">picture</span> with your <span class="cw" data-v="teacher">teacher</span>. Then <span class="cw" data-v="answer">answer</span> the questions. Say full <span class="cw" data-v="sentence">sentences</span>! 😊</p>
+  <div class="scene"><img src="assets/images/1A_01.png" data-fb="warmup" alt="A busy café: people meet and say goodbye"></div>
+  <ul class="qlist">
+    <li>Where are the <span class="cw" data-v="people">people</span>? (in a <span class="cw" data-v="coffee_shop">coffee shop</span> / at <span class="cw" data-v="school">school</span> / at <span class="cw" data-v="home">home</span>)</li>
+    <li>How many people can you see? <span class="cw" data-v="count">Count</span> them! 🔢</li>
+    <li>What <span class="cw" data-v="word">words</span> do they say? (<span class="cw" data-v="hello">Hello!</span> / <span class="cw" data-v="hi">Hi!</span> / <span class="cw" data-v="nice">Nice to meet you!</span> / <span class="cw" data-v="bye">Bye!</span>)</li>
+    <li>When do you say these words: when you <span class="cw" data-v="meet">meet</span> people, or when you <span class="cw" data-v="leave">leave</span>?</li>
+    <li>What English <span class="cw" data-v="greeting">greetings</span> do you <span class="cw" data-v="already">already</span> know? <span class="cw" data-v="tell">Tell</span> your teacher.</li>
+  </ul>
+  <div class="useful" style="margin-top:16px">
+    <h4>💬 Useful language</h4>
+    <ul>
+      <li>I can see …</li>
+      <li>I <span class="cw" data-v="think">think</span> …</li>
+      <li><span class="cw" data-v="maybe">Maybe</span> …</li>
+      <li>They say …</li>
+      <li>In my <span class="cw" data-v="opinion">opinion</span> …</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ SCREEN 3 ============ -->
+<section class="screen" id="s3">
+  <span class="timechip">≈ 10 min</span>
+  <span class="stage">Vocabulary</span>
+  <h1 class="scrtitle">Look, think and match</h1>
+
+  <div class="act" id="a3a">
+    <div class="acthead"><h3>Activity 1 · Phrases and pictures</h3><button class="rst" type="button">Reset</button></div>
+    <p class="instr"><span class="cw" data-v="match">Match</span> the <span class="cw" data-v="phrase">phrases</span> to the <span class="cw" data-v="picture">pictures</span>. <span class="cw" data-v="tap">Tap</span> a phrase, then tap a picture (or <span class="cw" data-v="drag">drag</span> the phrase).</p>
+    <div class="actbody"></div><div class="result"></div>
+  </div>
+
+  <div class="act" id="a3b">
+    <div class="acthead"><h3>Activity 2 · Classroom words</h3><button class="rst" type="button">Reset</button></div>
+    <p class="instr">Match the <span class="cw" data-v="classroom">classroom</span> words to the <span class="cw" data-v="picture">pictures</span>. Tap a word, then tap a picture.</p>
+    <div class="actbody"></div><div class="result"></div>
+  </div>
+</section>
+
+<!-- ============ SCREEN 4 ============ -->
+<section class="screen" id="s4">
+  <span class="timechip">≈ 10 min</span>
+  <span class="stage">Listening &amp; Speaking</span>
+  <h1 class="scrtitle">In a coffee shop</h1>
+  <p class="instr"><span class="cw" data-v="read">Read</span> the <span class="cw" data-v="conversation">conversations</span>. Then match conversations 1–4 to <span class="cw" data-v="photo">photos</span> A–D: tap a <span class="cw" data-v="number">number</span>, then tap a photo. Then <span class="cw" data-v="press">press</span> ▶ to <span class="cw" data-v="listen">listen</span> and <span class="cw" data-v="check">check</span>.</p>
+  <div class="grid2">
+    <div>
+      <div class="convo"><b>1</b>
+        <div class="ln"><span class="sp">Tom</span><span><span class="cw" data-v="hello">Hello</span>. <span class="cw" data-v="name_q">Are you Helen?</span></span></div>
+        <div class="ln"><span class="sp">Helen</span><span>Yes, I am. And <span class="cw" data-v="contraction">you’re</span> Tom.</span></div>
+        <div class="ln"><span class="sp">Tom</span><span>Yes! <span class="cw" data-v="nice">Nice to meet you</span>.</span></div>
+        <div class="ln"><span class="sp">Helen</span><span>Nice to meet you.</span></div>
+        <div class="ln"><span class="sp">Tom</span><span><span class="cw" data-v="minute">Just a minute</span>.</span></div>
+        <button class="spk sm" type="button" data-say="Hello. Are you Helen? Yes, I am. And you're Tom. Yes! Nice to meet you. Nice to meet you. Just a minute." style="margin-top:6px">🔊</button>
+      </div>
+      <div class="convo"><b>2</b>
+        <div class="ln"><span class="sp">Helen</span><span>A <span class="cw" data-v="cappuccino">cappuccino</span>, <span class="cw" data-v="please">please</span>.</span></div>
+        <div class="ln"><span class="sp b">Barista 1</span><span><span class="cw" data-v="name_q">What’s your name?</span></span></div>
+        <div class="ln"><span class="sp">Helen</span><span>Helen.</span></div>
+        <div class="ln"><span class="sp b">Barista 1</span><span>Ellen?</span></div>
+        <div class="ln"><span class="sp">Helen</span><span>No, Helen.</span></div>
+        <div class="ln"><span class="sp b">Barista 1</span><span>Helen. OK.</span></div>
+        <button class="spk sm" type="button" data-say="A cappuccino, please. What's your name? Helen. Ellen? No, Helen. Helen. OK." style="margin-top:6px">🔊</button>
+      </div>
+      <div class="convo"><b>3</b>
+        <div class="ln"><span class="sp">Tom</span><span><span class="cw" data-v="hi">Hi</span>. A <span class="cw" data-v="tea">tea</span>, <span class="cw" data-v="please">please</span>.</span></div>
+        <div class="ln"><span class="sp b">Barista 1</span><span>What’s your <span class="cw" data-v="name">name</span>?</span></div>
+        <div class="ln"><span class="sp">Tom</span><span>Tom.</span></div>
+        <div class="ln"><span class="sp b">Barista 1</span><span>Dom.</span></div>
+        <div class="ln"><span class="sp">Tom</span><span>No, I’m Tom, not Dom.</span></div>
+        <div class="ln"><span class="sp b">Barista 1</span><span><span class="cw" data-v="sorry">Sorry</span>.</span></div>
+        <button class="spk sm" type="button" data-say="Hi. A tea, please. What's your name? Tom. Dom. No, I'm Tom, not Dom. Sorry." style="margin-top:6px">🔊</button>
+      </div>
+      <div class="convo"><b>4</b>
+        <div class="ln"><span class="sp b">Barista 2</span><span>Are you Diana?</span></div>
+        <div class="ln"><span class="sp">Helen</span><span>No, <span class="cw" data-v="sorry">I’m not</span>. I’m Helen.</span></div>
+        <div class="ln"><span class="sp b">Barista 2</span><span>Sorry. Helen. Your cappuccino.</span></div>
+        <div class="ln"><span class="sp">Helen</span><span><span class="cw" data-v="thanks">Thanks</span>.</span></div>
+        <button class="spk sm" type="button" data-say="Are you Diana? No, I'm not. I'm Helen. Sorry. Helen. Your cappuccino. Thanks." style="margin-top:6px">🔊</button>
+      </div>
+    </div>
+    <div>
+      <div class="act" id="a4" style="margin-top:0">
+        <div class="acthead"><h3><span class="cw" data-v="photo">Photos</span> A–D</h3><button class="rst" type="button">Reset</button></div>
+        <div class="actbody"></div><div class="result"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SCREEN 5 ============ -->
+<section class="screen" id="s5">
+  <span class="timechip">≈ 10 min</span>
+  <span class="stage">Grammar</span>
+  <h1 class="scrtitle">How do we say it? <span class="mut small">am / are / I’m / you’re</span></h1>
+
+  <div class="act" id="a5a">
+    <div class="acthead"><h3>Activity 1 · Who is speaking?</h3><button class="rst" type="button">Reset</button></div>
+    <p class="instr"><span class="cw" data-v="put">Put</span> each <span class="cw" data-v="sentence">sentence</span> into the <span class="cw" data-v="correct">correct</span> <span class="cw" data-v="box">box</span>: is it about <b>I</b> (me) or about <b>you</b> (the other <span class="cw" data-v="person">person</span>)? Tap a sentence, then tap a box.</p>
+    <div class="actbody"></div><div class="result"></div>
+  </div>
+
+  <div class="act" id="a5b">
+    <div class="acthead"><h3>Activity 2 · Full form → contraction</h3><button class="rst" type="button">Reset</button></div>
+    <p class="instr">Match the <span class="cw" data-v="full_form">full forms</span> to the <span class="cw" data-v="contraction">contractions</span> (<span class="cw" data-v="short">short</span> forms). Tap a <span class="cw" data-v="long">long</span> form, then tap the short form.</p>
+    <div class="actbody"></div><div class="result"></div>
+  </div>
+
+  <div class="act" id="a5c">
+    <div class="acthead"><h3>Activity 3 · Complete the rule</h3><button class="rst" type="button">Reset</button></div>
+    <p class="instr"><span class="cw" data-v="choose">Choose</span> the correct <span class="cw" data-v="word">word</span> for each <span class="cw" data-v="gap">gap</span>.</p>
+    <div class="actbody"></div><div class="result"></div>
+  </div>
+
+  <table class="gtable" style="margin-top:18px">
+    <tr><th style="width:56px"></th><th>I</th><th>you</th></tr>
+    <tr>
+      <td>➕</td>
+      <td>I + <span class="hl">am</span> = <span class="hl">I’m</span><span class="small mut">I’m Helen.</span></td>
+      <td>You + <span class="hl">are</span> = <span class="hl">you’re</span><span class="small mut">You’re Tom.</span></td>
+    </tr>
+    <tr>
+      <td>➖</td>
+      <td>I + <span class="hl">am</span> + not = <span class="hl">I’m not</span><span class="small mut">I’m not Ellen.</span></td>
+      <td>You + <span class="hl">are</span> + not = <span class="hl">you aren’t</span> / <span class="hl">you’re not</span><span class="small mut">You aren’t Dom.</span></td>
+    </tr>
+    <tr>
+      <td>❓</td>
+      <td><span class="hl">Am</span> I …?<span class="small mut">Yes, I <span class="hl">am</span>. / No, I’m <span class="hl">not</span>.</span></td>
+      <td><span class="hl">Are</span> you …?<span class="small mut">Yes, you <span class="hl">are</span>. / No, you <span class="hl">aren’t</span>.</span></td>
+    </tr>
+  </table>
+  <div class="notebox">
+    <b>Remember:</b> in a <span class="cw" data-v="question">question</span> the verb <i>be</i> goes <b><span class="cw" data-v="before">before</span></b> the <span class="cw" data-v="person">person</span>:
+    <span class="hl">You’re</span> Tom. → <span class="hl">Are you</span> Tom?
+  </div>
+</section>
+
+<!-- ============ SCREEN 6 ============ -->
+<section class="screen" id="s6">
+  <span class="timechip">≈ 10 min</span>
+  <span class="stage">Grammar practice</span>
+  <h1 class="scrtitle">Your turn: I’m / You’re</h1>
+
+  <div class="act" id="a6a">
+    <div class="acthead"><h3>Activity 1 · Complete with <i>I’m</i> or <i>You’re</i></h3><button class="rst" type="button">Reset</button></div>
+    <p class="instr"><span class="cw" data-v="complete">Complete</span> the sentences. Tap the correct <span class="cw" data-v="option">option</span>.</p>
+    <div class="actbody"></div><div class="result"></div>
+  </div>
+
+  <div class="act" id="a6b">
+    <div class="acthead"><h3>Activity 2 · Complete with <i>I’m not</i> or <i>You aren’t</i></h3><button class="rst" type="button">Reset</button></div>
+    <p class="instr">Tap the correct <span class="cw" data-v="option">option</span>.</p>
+    <div class="actbody"></div><div class="result"></div>
+  </div>
+
+  <div class="act" id="a6c">
+    <div class="acthead"><h3>Activity 3 · Make questions</h3><button class="rst" type="button">Reset</button></div>
+    <p class="instr">Tap the words in the correct <span class="cw" data-v="order_seq">order</span> to make a <span class="cw" data-v="question">question</span>. Tap a word in the <span class="cw" data-v="answer">answer</span> to <span class="cw" data-v="send">send</span> it back.</p>
+    <div class="actbody"></div><div class="result"></div>
+  </div>
+</section>
+
+<!-- ============ SCREEN 7 ============ -->
+<section class="screen" id="s7">
+  <span class="timechip">≈ 10 min</span>
+  <span class="stage">Pronunciation &amp; Numbers</span>
+  <h1 class="scrtitle">Sounds and numbers 0–10</h1>
+
+  <div class="act" id="a7a">
+    <div class="acthead"><h3>Activity 1 · Put the words with their sound</h3><button class="rst" type="button">Reset</button></div>
+    <p class="instr">Tap a word, then tap its <span class="cw" data-v="sound">sound</span>: /h/ like <b>h</b>ouse · /aɪ/ like b<b>i</b>ke · /iː/ like tr<b>ee</b>. Put <b>all</b> the words with the same sound into the same card. <span class="cw" data-v="press">Press</span> 🔊 to <span class="cw" data-v="hear">hear</span> a word.</p>
+    <div class="actbody"></div><div class="result"></div>
+  </div>
+
+  <div class="act">
+    <div class="acthead"><h3>Activity 2 · Listen and repeat</h3></div>
+    <p class="instr">Press ▶, then <span class="cw" data-v="repeat">repeat</span> the <span class="cw" data-v="sentence">sentences</span> to your teacher.</p>
+    <div class="flexrow" style="margin:6px 0"><button class="spk" type="button" data-say="Hello, Helen!">🔊</button><span><b>H</b>ello, <b>H</b>elen!</span></div>
+    <div class="flexrow" style="margin:6px 0"><button class="spk" type="button" data-say="Hi, I'm Mike.">🔊</button><span><b>H</b>i, <b>I</b>’m M<b>i</b>ke.</span></div>
+    <div class="flexrow" style="margin:6px 0"><button class="spk" type="button" data-say="Three teas, please.">🔊</button><span>Thr<b>ee</b> t<b>ea</b>s, <span class="cw" data-v="please">pl<b>ea</b>se</span>.</span></div>
+  </div>
+
+  <div class="act">
+    <div class="acthead"><h3>Activity 3 · Numbers 0–10</h3></div>
+    <p class="instr">Tap a number to <span class="cw" data-v="hear">hear</span> it 🔊 (if the file is <span class="cw" data-v="missing">missing</span>, a <span class="cw" data-v="voice">voice</span> says it). Tap <span class="mini" data-v="n0" style="vertical-align:middle">?</span> on any number for its card.</p>
+    <div class="numgrid" id="numgrid"></div>
+  </div>
+
+  <div class="act">
+    <div class="acthead"><h3>Activity 4 · Letters A–Z</h3></div>
+    <p class="instr">Tap a <span class="cw" data-v="letter">letter</span> to hear it 🔊. Then <span class="cw" data-v="spell">spell</span> your <span class="cw" data-v="name">name</span> for your teacher! Can you spell the names from the coffee shop? (Helen · Tom · Diana · Dom)</p>
+    <div class="ltrgrid" id="ltrgrid"></div>
+  </div>
+
+  <div class="act" id="a7b">
+    <div class="acthead"><h3>Activity 5 · Listen and write the number</h3><button class="rst" type="button">Reset</button></div>
+    <p class="instr">Press ▶, <span class="cw" data-v="listen">listen</span> and <span class="cw" data-v="write">write</span> the number as a word (for <span class="cw" data-v="example">example</span>: <i>five</i>). Press Enter ↵.</p>
+    <div class="actbody"></div><div class="result"></div>
+  </div>
+
+  <div class="act" id="a7c">
+    <div class="acthead"><h3>Activity 6 · What is the next number?</h3><button class="rst" type="button">Reset</button></div>
+    <p class="instr">Listen and write the <span class="cw" data-v="next">next</span> number as a word. Press Enter ↵.</p>
+    <div class="actbody"></div><div class="result"></div>
+  </div>
+
+  <div class="act" id="a7d">
+    <div class="acthead"><h3>Activity 7 · How many cups?</h3><button class="rst" type="button">Reset</button></div>
+    <p class="instr"><span class="cw" data-v="count">Count</span> the <span class="cw" data-v="cup">cups</span> and write the number as a word or <span class="cw" data-v="digit">digit</span> (for example: <i>two</i> / <i>2</i>). Press Enter ↵.</p>
+    <div class="actbody"></div><div class="result"></div>
+  </div>
+</section>
+
+<!-- ============ SCREEN 8 ============ -->
+<section class="screen" id="s8">
+  <span class="timechip">≈ 8 min</span>
+  <span class="stage">Vocabulary</span>
+  <h1 class="scrtitle">Days of the week &amp; saying goodbye</h1>
+
+  <div class="act">
+    <div class="acthead"><h3>The seven days</h3></div>
+    <p class="instr">Tap a <span class="cw" data-v="day">day</span> to <span class="cw" data-v="hear">hear</span> it 🔊. Remember: <span class="cw" data-v="capital">capital</span> <span class="cw" data-v="letter">letters</span>! <b>Monday</b>, NOT <s>monday</s>.</p>
+    <div class="flexrow" id="dayrow"></div>
+  </div>
+
+  <div class="act" id="a8a">
+    <div class="acthead"><h3>Activity 1 · Put the days in order</h3><button class="rst" type="button">Reset</button></div>
+    <p class="instr">Tap the days in <span class="cw" data-v="order_seq">order</span>: <span class="cw" data-v="first">first</span> <b>Monday</b>, then … Tap a <span class="cw" data-v="wrong">wrong</span> word in the answer to <span class="cw" data-v="send">send</span> it back.</p>
+    <div class="actbody"></div><div class="result"></div>
+  </div>
+
+  <div class="act" id="a8b">
+    <div class="acthead"><h3>Activity 2 · Today, tomorrow, the weekend</h3><button class="rst" type="button">Reset</button></div>
+    <p class="instr"><span class="cw" data-v="choose">Choose</span> the correct day. (Yes — it’s <span class="cw" data-v="real_life">real life</span>! 📅)</p>
+    <div class="actbody"></div><div class="result"></div>
+  </div>
+
+  <div class="act" id="a8c">
+    <div class="acthead"><h3>Activity 3 · What do you say?</h3><button class="rst" type="button">Reset</button></div>
+    <p class="instr">Choose the <span class="cw" data-v="best">best</span> <span class="cw" data-v="phrase">phrase</span>.</p>
+    <div class="actbody"></div><div class="result"></div>
+  </div>
+</section>
+
+<!-- ============ SCREEN 9 ============ -->
+<section class="screen" id="s9">
+  <span class="timechip">≈ 8 min</span>
+  <span class="stage">Speaking</span>
+  <h1 class="scrtitle">Role-play: at the school café ☕</h1>
+  <p class="instr"><span class="cw" data-v="practise">Practise</span> the <span class="cw" data-v="conversation">conversation</span> with your teacher. Then <span class="cw" data-v="swap">swap</span> <span class="cw" data-v="role">roles</span>. <span class="cw" data-v="tick">Tick</span> ✅ the <span class="cw" data-v="step">steps</span> when you do them!</p>
+  <div class="grid2">
+    <div class="rolecard">
+      <h4>🧑 Role A · Barista</h4>
+      <ul style="margin:6px 0;padding-left:20px;font-weight:600">
+        <li><span class="cw" data-v="greet">Greet</span>: <i>Hello! / Hi!</i></li>
+        <li><span class="cw" data-v="ask">Ask</span>: <i><span class="cw" data-v="name_q">What’s your name?</span></i></li>
+        <li><span class="cw" data-v="check">Check</span>: <i><span class="cw" data-v="name_q">Are you</span> …?</i></li>
+        <li><span class="cw" data-v="give">Give</span> the <span class="cw" data-v="drink">drink</span>: <i>Your <span class="cw" data-v="tea">tea</span> / <span class="cw" data-v="cappuccino">cappuccino</span>.</i></li>
+        <li><span class="cw" data-v="goodbye">Say goodbye</span>: <i>Goodbye! <span class="cw" data-v="see_fri">See you on …</span></i></li>
+      </ul>
+    </div>
+    <div class="rolecard">
+      <h4>🎒 Role B · New student</h4>
+      <ul style="margin:6px 0;padding-left:20px;font-weight:600">
+        <li><span class="cw" data-v="greet">Greet</span>: <i>Hi! <span class="cw" data-v="contraction">I’m</span> …</i></li>
+        <li><span class="cw" data-v="answer">Answer</span>: <i>Yes, I am. / No, I’m not. I’m …</i></li>
+        <li><span class="cw" data-v="order_drink">Order</span>: <i>A tea / A cappuccino / Two teas, please.</i> (use a number! 🔢)</li>
+        <li><span class="cw" data-v="say">Say</span>: <i><span class="cw" data-v="nice">Nice to meet you</span>.</i></li>
+        <li><span class="cw" data-v="goodbye">Say goodbye</span>: <i><span class="cw" data-v="bye">Bye</span>! <span class="cw" data-v="see_tom">See you tomorrow</span>.</i></li>
+      </ul>
+    </div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <h4 style="margin-top:0">✅ Checklist</h4>
+    <div id="steps">
+      <div class="stepchk"><span class="box">✓</span><span>We <span class="cw" data-v="greet">greeted</span> <span class="cw" data-v="each_other">each other</span>.</span></div>
+      <div class="stepchk"><span class="box">✓</span><span>We <span class="cw" data-v="ask">asked</span> and <span class="cw" data-v="answer">answered</span> “What’s your name?”</span></div>
+      <div class="stepchk"><span class="box">✓</span><span>We <span class="cw" data-v="use">used</span> “Are you …? — Yes, I am. / No, I’m not.”</span></div>
+      <div class="stepchk"><span class="box">✓</span><span>We used a <span class="cw" data-v="number">number</span> (0–10).</span></div>
+      <div class="stepchk"><span class="box">✓</span><span>We <span class="cw" data-v="say">said</span> <span class="cw" data-v="goodbye">goodbye</span> with a <span class="cw" data-v="day">day</span> of the week.</span></div>
+    </div>
+  </div>
+  <div class="useful" style="margin-top:16px">
+    <h4>💬 Teacher’s questions for you</h4>
+    <ul>
+      <li>What’s your name? How do you <span class="cw" data-v="spell">spell</span> it?</li>
+      <li>Are you in class 1? What class are you in?</li>
+      <li>What day is your English class?</li>
+      <li>How many English classes do you have in a week?</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ SCREEN 10 ============ -->
+<section class="screen" id="s10">
+  <span class="timechip">≈ 7 min</span>
+  <span class="stage">Review</span>
+  <h1 class="scrtitle">Can you remember?</h1>
+  <div class="act" id="a10">
+    <div class="acthead"><h3>Mini quiz</h3><button class="rst" type="button">Reset</button></div>
+    <p class="instr"><span class="cw" data-v="choose">Choose</span> the correct <span class="cw" data-v="answer">answer</span>.</p>
+    <div class="actbody"></div><div class="result"></div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <h4 style="margin-top:0">🪞 Think and say</h4>
+    <ul class="qlist" style="margin-top:8px">
+      <li>Which new words can you <span class="cw" data-v="remember">remember</span>? Say five!</li>
+      <li>What can you say in English now? (greet / ask a name / say numbers / say days)</li>
+      <li>Which grammar <span class="cw" data-v="form">form</span> do you <span class="cw" data-v="still">still</span> <span class="cw" data-v="want">want</span> to practise: ➕ ➖ or ❓?</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ SCREEN 11 ============ -->
+<section class="screen" id="s11">
+  <span class="timechip">≈ 5 min</span>
+  <span class="stage">Homework</span>
+  <h1 class="scrtitle">Your homework 🏠</h1>
+  <div class="act" id="a11">
+    <div class="acthead"><h3>Part 1 · Complete with am / are / ’m / ’re / aren’t</h3><button class="rst" type="button">Reset</button></div>
+    <p class="instr">Write the <span class="cw" data-v="missing">missing</span> word. <span class="cw" data-v="press">Press</span> Enter ↵ to <span class="cw" data-v="check">check</span>.</p>
+    <div class="actbody"></div><div class="result"></div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <h4 style="margin-top:0">Part 2 · Write a <span class="cw" data-v="dialogue">dialogue</span> “In a coffee shop” (6–8 <span class="cw" data-v="line">lines</span>)</h4>
+    <p class="small mut">Write it here or in your <span class="cw" data-v="notebook">notebook</span>. You can also <span class="cw" data-v="record">record</span> a 60–90 second audio for your teacher. 🎙️</p>
+    <textarea class="hw" id="hwtxt" placeholder="A: Hello! Are you ...?&#10;B: Yes, I am. And you're ...&#10;..."></textarea>
+    <p class="hint" id="hwcount">Lines: 0 · Words: 0</p>
+    <div class="checklist">
+      <b>Checklist:</b>
+      <ul>
+        <li>✔ 6–8 lines</li>
+        <li>✔ five <span class="cw" data-v="word">words</span> from the <span class="cw" data-v="lesson">lesson</span> (greetings, numbers, days)</li>
+        <li>✔ <i>I’m / You’re / I’m not / You aren’t</i> — three times</li>
+        <li>✔ one <span class="cw" data-v="question">question</span> with <i>Am I …? / Are you …?</i></li>
+        <li>✔ <span class="cw" data-v="capital">capital letters</span> for names and days</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card" style="margin-top:16px;text-align:center;background:linear-gradient(120deg,#efe6ff,#e8f4ff)">
+    <div style="font-size:44px">🎉</div>
+    <h3 style="color:var(--pur-d)"><span class="cw" data-v="well_done">Well done</span>! You <span class="cw" data-v="finish">finished</span> the lesson!</h3>
+    <p class="mut" style="margin:0">See you at the <span class="cw" data-v="next">next</span> lesson! <span class="cw" data-v="see_tom">See you tomorrow</span>! 👋</p>
+  </div>
+</section>
+
+</div><!-- /wrap -->
+
+<div class="navbar"><div class="in">
+  <button class="btn ghost" id="prevB" type="button">◀ Back</button>
+  <span class="navinfo" id="navinfo"></span>
+  <button class="btn" id="nextB" type="button">Next ▶</button>
+</div></div>
+
+<div class="overlay" id="ov"><div class="vcard" id="vcard"></div></div>
+
+<script>
+"use strict";
+/* ================= HELPERS ================= */
+var $=function(s){return document.querySelector(s);};
+var $$=function(s){return Array.prototype.slice.call(document.querySelectorAll(s));};
+function speak(t){try{var u=new SpeechSynthesisUtterance(t);var vs=speechSynthesis.getVoices();
+ var v=null,i;for(i=0;i<vs.length;i++){if(/en[-_]GB/i.test(vs[i].lang)){v=vs[i];break;}}
+ if(!v){for(i=0;i<vs.length;i++){if(/^en/i.test(vs[i].lang)){v=vs[i];break;}}}
+ if(v)u.voice=v;u.lang="en-GB";u.rate=0.9;u.pitch=1.05;speechSynthesis.cancel();speechSynthesis.speak(u);}catch(e){}}
+var AC=null;
+function tone(f,t0,d,type,g){AC=AC||new (window.AudioContext||window.webkitAudioContext)();
+ var o=AC.createOscillator(),ga=AC.createGain();o.type=type||"sine";o.frequency.value=f;
+ ga.gain.setValueAtTime(g||0.12,AC.currentTime+t0);ga.gain.exponentialRampToValueAtTime(0.001,AC.currentTime+t0+d);
+ o.connect(ga);ga.connect(AC.destination);o.start(AC.currentTime+t0);o.stop(AC.currentTime+t0+d+0.03);}
+function sfxOk(){tone(660,0,0.12);tone(880,0.12,0.18);}
+function sfxErr(){tone(220,0,0.2,"triangle",0.13);}
+function shuffle(a){var r=a.slice(),i,j,t;for(i=r.length-1;i>0;i--){j=Math.floor(Math.random()*(i+1));t=r[i];r[i]=r[j];r[j]=t;}return r;}
+
+/* ================= AUDIO MANAGER (files first, TTS fallback) ================= */
+var AUDIO_CACHE={};
+function playFile(src,text){
+  var a=AUDIO_CACHE[src];
+  if(!a){a=new Audio(src);a._broken=false;
+    a.addEventListener("error",function(){if(a._broken)return;a._broken=true;speak(text);});
+    AUDIO_CACHE[src]=a;}
+  if(a._broken){speak(text);return;}
+  try{speechSynthesis.cancel();}catch(e){}
+  try{a.currentTime=0;}catch(e){}
+  var p=a.play();
+  if(p&&p.catch){p.catch(function(){if(a._broken)return;a._broken=true;speak(text);});}
+}
+var DAY_KEYS={dMon:1,dTue:1,dWed:1,dThu:1,dFri:1,dSat:1,dSun:1};
+var AOVER={
+ nice:"assets/audio/nice_to_meet_you.mp3",
+ see_tom:"assets/audio/see_you_tomorrow.mp3",
+ see_fri:"assets/audio/see_you_friday.mp3",
+ minute:"assets/audio/just_a_minute.mp3",
+ name_q:"assets/audio/whats_your_name.mp3",
+ capital:"assets/audio/capital_letter.mp3",
+ coffee_shop:"assets/audio/coffee_shop.mp3",
+ tea:"assets/audio/tea.mp3",
+ cappuccino:"assets/audio/cappuccino.mp3",
+ weekend:"assets/audio/weekend.mp3"
+};
+function slugOf(w){return w.toLowerCase().replace(/[^a-z0-9]+/g,"_").replace(/^_+|_+$/g,"");}
+function vocabAudio(k){
+  var e=V[k];if(!e)return null;
+  if(AOVER[k])return AOVER[k];
+  if(/^n\d+$/.test(k))return "assets/audio/numbers/"+e.w.toLowerCase()+".mp3";
+  if(DAY_KEYS[k])return "assets/audio/days_of_the_week/"+e.w.toLowerCase()+".mp3";
+  return "assets/audio/"+slugOf(e.w)+".mp3";
+}
+function playVocab(k){var e=V[k];if(!e)return;playFile(vocabAudio(k),e.w);}
+function playSlug(slug,text){playFile("assets/audio/"+slug+".mp3",text||slug);}
+function playLetter(L){playFile("assets/audio/letters/"+L.toLowerCase()+".mp3",L);}
+
+/* ================= SVG FALLBACK SCENES (used only if an image file is missing) ================= */
+var D={
+ person:function(x,y,o){o=o||{};var skin=o.skin||"#f2c19a",shirt=o.shirt||"#4a7fd4",hair=o.hair||"#5b3a24",pants=o.pants||"#3d4451",dir=o.dir||1;var g="";
+  if(o.legs){g+='<rect x="'+(x-15)+'" y="'+(y+64)+'" width="12" height="38" rx="6" fill="'+pants+'"/><rect x="'+(x+3)+'" y="'+(y+64)+'" width="12" height="38" rx="6" fill="'+pants+'"/><ellipse cx="'+(x-9)+'" cy="'+(y+104)+'" rx="11" ry="5" fill="#333"/><ellipse cx="'+(x+9)+'" cy="'+(y+104)+'" rx="11" ry="5" fill="#333"/>';}
+  var arm=function(a,b,c,d2){return '<line x1="'+a+'" y1="'+b+'" x2="'+c+'" y2="'+d2+'" stroke="'+shirt+'" stroke-width="11" stroke-linecap="round"/>';};
+  var hand=function(hx,hy,r){return '<circle cx="'+hx+'" cy="'+hy+'" r="'+(r||6)+'" fill="'+skin+'"/>';};
+  var arms="";var pose=o.pose||"down";
+  if(pose==="wave"){arms=arm(x-20*dir,y+12,x-27*dir,y+44)+hand(x-28*dir,y+48,5)+arm(x+20*dir,y+12,x+40*dir,y-12)+hand(x+43*dir,y-17,6);}
+  else if(pose==="shake"){arms=arm(x-20*dir,y+12,x-26*dir,y+44)+hand(x-27*dir,y+48,5)+arm(x+20*dir,y+12,x+50*dir,y+20)+hand(x+54*dir,y+22,6);}
+  else if(pose==="finger"){arms=arm(x-20*dir,y+12,x-26*dir,y+44)+hand(x-27*dir,y+48,5)+arm(x+20*dir,y+12,x+33*dir,y-2)+hand(x+35*dir,y-6,5)+'<line x1="'+(x+35*dir)+'" y1="'+(y-10)+'" x2="'+(x+35*dir)+'" y2="'+(y-22)+'" stroke="'+skin+'" stroke-width="5" stroke-linecap="round"/>';}
+  else if(pose==="hold"){arms=arm(x-18*dir,y+12,x+2*dir,y+26)+hand(x+2*dir,y+28,5)+arm(x+20*dir,y+12,x+30*dir,y+24)+hand(x+32*dir,y+26,5);}
+  else if(pose==="write"){arms=arm(x-20*dir,y+12,x-26*dir,y+44)+hand(x-27*dir,y+48,5)+arm(x+20*dir,y+12,x+36*dir,y+26)+hand(x+38*dir,y+28,5)+'<line x1="'+(x+38*dir)+'" y1="'+(y+24)+'" x2="'+(x+44*dir)+'" y2="'+(y+34)+'" stroke="#444" stroke-width="3" stroke-linecap="round"/>';}
+  else if(pose==="point"){arms=arm(x-20*dir,y+12,x-26*dir,y+44)+hand(x-27*dir,y+48,5)+arm(x+20*dir,y+12,x+4*dir,y+28)+hand(x+2*dir,y+30,5);}
+  else{arms=arm(x-20,y+12,x-26,y+44)+hand(x-27,y+48,5)+arm(x+20,y+12,x+26,y+44)+hand(x+27,y+48,5);}
+  g+=arms+'<rect x="'+(x-22)+'" y="'+y+'" width="44" height="70" rx="16" fill="'+shirt+'"/>';
+  if(o.apron)g+='<rect x="'+(x-13)+'" y="'+(y+14)+'" width="26" height="52" rx="8" fill="#3a3f4a"/><line x1="'+(x-8)+'" y1="'+(y+14)+'" x2="'+(x-12)+'" y2="'+(y+2)+'" stroke="#3a3f4a" stroke-width="4"/><line x1="'+(x+8)+'" y1="'+(y+14)+'" x2="'+(x+12)+'" y2="'+(y+2)+'" stroke="#3a3f4a" stroke-width="4"/>';
+  if(o.tag)g+='<rect x="'+(x-9)+'" y="'+(y+20)+'" width="18" height="12" rx="2" fill="#fff" stroke="#c9c9c9"/>';
+  if(o.straps)g+='<line x1="'+(x-12)+'" y1="'+(y+2)+'" x2="'+(x-12)+'" y2="'+(y+42)+'" stroke="#e0662f" stroke-width="5"/><line x1="'+(x+12)+'" y1="'+(y+2)+'" x2="'+(x+12)+'" y2="'+(y+42)+'" stroke="#e0662f" stroke-width="5"/>';
+  g+='<circle cx="'+x+'" cy="'+(y-16)+'" r="19" fill="'+skin+'"/>';
+  var hs=o.hairStyle||"cap";
+  if(hs==="cap")g+='<path d="M '+(x-19)+' '+(y-18)+' a 19 19 0 0 1 38 0 z" fill="'+hair+'"/>';
+  if(hs==="pony")g+='<path d="M '+(x-19)+' '+(y-18)+' a 19 19 0 0 1 38 0 z" fill="'+hair+'"/><circle cx="'+(x-20*dir)+'" cy="'+(y-20)+'" r="7" fill="'+hair+'"/>';
+  if(hs==="bun")g+='<path d="M '+(x-19)+' '+(y-18)+' a 19 19 0 0 1 38 0 z" fill="'+hair+'"/><circle cx="'+x+'" cy="'+(y-37)+'" r="7" fill="'+hair+'"/>';
+  if(hs==="curly")g+='<circle cx="'+(x-12)+'" cy="'+(y-26)+'" r="8" fill="'+hair+'"/><circle cx="'+x+'" cy="'+(y-31)+'" r="9" fill="'+hair+'"/><circle cx="'+(x+12)+'" cy="'+(y-26)+'" r="8" fill="'+hair+'"/>';
+  if(o.beard)g+='<path d="M '+(x-14)+' '+(y-10)+' q 14 16 28 0 q 2 12 -14 14 q -16 -2 -14 -14 z" fill="'+hair+'"/>';
+  g+='<circle cx="'+(x-6)+'" cy="'+(y-18)+'" r="2.3" fill="#333"/><circle cx="'+(x+6)+'" cy="'+(y-18)+'" r="2.3" fill="#333"/><path d="M '+(x-6)+' '+(y-9)+' q 6 5 12 0" stroke="#333" stroke-width="2" fill="none" stroke-linecap="round"/>';
+  return g;},
+ bubble:function(x,y,w,h,tail,c){var t=tail==="l"?'<polygon points="'+(x+18)+','+(y+h-1)+' '+(x+10)+','+(y+h+14)+' '+(x+34)+','+(y+h-1)+'" fill="#fff" stroke="#e3def0"/>':'<polygon points="'+(x+w-18)+','+(y+h-1)+' '+(x+w-10)+','+(y+h+14)+' '+(x+w-34)+','+(y+h-1)+'" fill="#fff" stroke="#e3def0"/>';
+  return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="12" fill="#fff" stroke="#e3def0"/>'+t+(c?'<text x="'+(x+w/2)+'" y="'+(y+h/2+9)+'" text-anchor="middle" font-size="24" font-weight="700" fill="#7b2fbe">'+c+"</text>":"");},
+ cup:function(x,y,s,kind){s=s||1;kind=kind||"cap";
+  return '<path d="M '+(x-13*s)+' '+(y+2)+' L '+(x+13*s)+' '+(y+2)+' L '+(x+9*s)+' '+(y+36*s)+' L '+(x-9*s)+' '+(y+36*s)+' Z" fill="#fff" stroke="#d8d2c8"/><ellipse cx="'+x+'" cy="'+y+'" rx="'+(14*s)+'" ry="'+(5*s)+'" fill="#fbf8f4" stroke="#d8d2c8"/><ellipse cx="'+x+'" cy="'+y+'" rx="'+(9*s)+'" ry="'+(3*s)+'" fill="'+(kind==="cap"?"#d9a066":"#4a2c17")+'"/>'+(kind==="tea"?'<line x1="'+(x+10*s)+'" y1="'+(y+4)+'" x2="'+(x+16*s)+'" y2="'+(y+22*s)+'" stroke="#b3443c" stroke-width="2"/><rect x="'+(x+12*s)+'" y="'+(y+20*s)+'" width="'+(10*s)+'" height="'+(8*s)+'" rx="2" fill="#d9534f"/>':"");},
+ counter:function(x,y,w){return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="14" rx="7" fill="#d9a066"/><rect x="'+(x+6)+'" y="'+(y+10)+'" width="'+(w-12)+'" height="62" rx="8" fill="#b07b4a"/>';},
+ bowl:function(x,y){return '<path d="M '+(x-20)+' '+y+' a 20 12 0 0 0 40 0 z" fill="#7aa7d9"/><circle cx="'+(x-8)+'" cy="'+(y-4)+'" r="5" fill="#e05555"/><circle cx="'+(x+2)+'" cy="'+(y-6)+'" r="5" fill="#f0b429"/><circle cx="'+(x+10)+'" cy="'+(y-3)+'" r="5" fill="#e05555"/>';},
+ door:function(x,y,w,h){return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="6" fill="#e8e2f4" stroke="#b9aed6" stroke-width="3"/><rect x="'+(x+w/2-12)+'" y="'+(y+16)+'" width="24" height="34" rx="4" fill="#cfe6f2"/>';},
+ light:function(x,y){return '<line x1="'+x+'" y1="0" x2="'+x+'" y2="'+y+'" stroke="#c9c2b8" stroke-width="3"/><circle cx="'+x+'" cy="'+(y+8)+'" r="10" fill="#ffd77a"/>';},
+ reg:function(x,y){return '<rect x="'+x+'" y="'+y+'" width="52" height="34" rx="5" fill="#3a3f4a"/><rect x="'+(x+8)+'" y="'+(y-16)+'" width="36" height="22" rx="4" fill="#59606e"/>';}
+};
+function wrapSVG(vb,html,slice){return '<svg viewBox="'+vb+'" preserveAspectRatio="'+(slice?"xMidYMid slice":"xMidYMid meet")+'" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block">'+html+"</svg>";}
+var SC={
+ hero:{vb:"0 0 640 300",html:'<rect width="640" height="300" fill="#fdf3e7"/>'+D.light(120,40)+D.light(320,32)+D.light(520,40)+'<rect x="430" y="46" width="150" height="72" rx="10" fill="#3a3f4a"/><path d="M445 66 q20 -8 40 0 M445 84 q30 -8 60 0 M445 102 q20 -8 45 0" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/>'+D.counter(40,190,400)+D.person(150,110,{pose:"wave",apron:1,shirt:"#4a7fd4",hairStyle:"bun",hair:"#222"})+D.cup(255,182)+D.cup(305,182,1,"tea")+D.bowl(375,182)+D.person(540,120,{pose:"wave",dir:-1,legs:1,shirt:"#e0662f",straps:1})+D.bubble(430,150,90,44,"l")},
+ warmup:{vb:"0 0 700 300",html:'<rect width="700" height="300" fill="#fdf3e7"/>'+D.door(330,60,64,120)+D.counter(430,180,250)+D.person(60,120,{pose:"wave",dir:-1,legs:1,shirt:"#8a4f7d",hairStyle:"pony"})+D.bubble(16,34,80,40,"r")+D.person(170,110,{pose:"shake",legs:1,shirt:"#7b2fbe",hairStyle:"pony"})+D.person(268,110,{pose:"shake",dir:-1,legs:1,shirt:"#2e8b74",hairStyle:"curly",hair:"#222"})+D.bubble(128,32,80,40,"r")+D.bubble(232,32,80,40,"l")+D.person(362,120,{pose:"wave",legs:1,shirt:"#e0662f",straps:1})+D.bubble(318,34,74,40,"r")+D.person(545,110,{pose:"finger",apron:1,shirt:"#4a7fd4",hairStyle:"bun",hair:"#222"})+D.bubble(585,36,84,44,"l")+D.cup(470,172)+D.cup(505,172,1,"tea")+D.bowl(640,172)},
+ hello:{vb:"0 0 300 200",html:'<rect width="300" height="200" fill="#eaf6ef"/>'+D.person(170,80,{pose:"wave",legs:1,shirt:"#e0662f"})+D.bubble(52,26,92,46,"r")},
+ nice:{vb:"0 0 320 200",html:'<rect width="320" height="200" fill="#eef0fb"/>'+D.person(110,80,{pose:"shake",legs:1,shirt:"#7b2fbe",hairStyle:"pony"})+D.person(212,80,{pose:"shake",dir:-1,legs:1,shirt:"#2e8b74",hairStyle:"curly",hair:"#222"})+D.bubble(36,16,84,42,"r")+D.bubble(200,16,84,42,"l")},
+ minute:{vb:"0 0 320 200",html:'<rect width="320" height="200" fill="#fdf3e7"/>'+D.counter(20,130,280)+D.person(150,62,{pose:"finger",apron:1,shirt:"#4a7fd4",hairStyle:"bun",hair:"#222"})+D.cup(80,122)+D.bubble(212,18,88,46,"l")},
+ bye:{vb:"0 0 320 210",html:'<rect width="320" height="210" fill="#fdeef0"/>'+D.door(138,24,72,120)+D.person(88,74,{pose:"wave",legs:1,shirt:"#8a4f7d",hairStyle:"pony"})+D.person(240,74,{pose:"wave",dir:-1,legs:1,shirt:"#2e8b74"})+D.bubble(24,16,82,40,"r")+D.bubble(212,16,82,40,"l")},
+ name:{vb:"0 0 320 200",html:'<rect width="320" height="200" fill="#eaf6ef"/>'+D.person(110,78,{pose:"down",legs:1,shirt:"#e0662f"})+D.bubble(56,12,72,46,"r","?")+D.person(222,78,{pose:"point",legs:1,shirt:"#7b2fbe",hairStyle:"pony",tag:1})},
+ p1:{vb:"0 0 340 220",html:'<rect width="340" height="220" fill="#fdf3e7"/>'+D.counter(20,140,300)+D.reg(250,108)+D.person(120,70,{pose:"write",apron:1,shirt:"#4a7fd4",hairStyle:"pony"})+D.cup(164,96,0.8)+D.person(252,84,{pose:"down",legs:1,shirt:"#c9b48a",hairStyle:"pony"})+D.bowl(60,132)},
+ p2:{vb:"0 0 340 220",html:'<rect width="340" height="220" fill="#fdf3e7"/>'+D.counter(20,140,300)+D.person(120,70,{pose:"hold",apron:1,shirt:"#3f6fb5",hair:"#222",beard:1})+D.cup(154,92,0.9)+'<line x1="340" y1="118" x2="284" y2="112" stroke="#c9b48a" stroke-width="12" stroke-linecap="round"/><circle cx="280" cy="112" r="6" fill="#f2c19a"/><line x1="340" y1="140" x2="290" y2="130" stroke="#c9b48a" stroke-width="12" stroke-linecap="round"/><circle cx="286" cy="130" r="6" fill="#f2c19a"/>'+D.bowl(60,132)},
+ p4:{vb:"0 0 340 220",html:'<rect width="340" height="220" fill="#fdf3e7"/>'+D.counter(20,140,300)+D.reg(60,108)+D.person(150,70,{pose:"write",apron:1,shirt:"#4a7fd4",hairStyle:"pony"})+D.cup(192,96,0.8)+D.person(262,84,{pose:"down",legs:1,shirt:"#6b7280",hair:"#3f3f3f"})+D.bowl(300,132)}
+};
+var FALLBACK={
+ hero:wrapSVG(SC.hero.vb,SC.hero.html,false),
+ warmup:wrapSVG(SC.warmup.vb,SC.warmup.html,false),
+ hello:wrapSVG(SC.hello.vb,SC.hello.html,true),
+ nice:wrapSVG(SC.nice.vb,SC.nice.html,true),
+ minute:wrapSVG(SC.minute.vb,SC.minute.html,true),
+ name:wrapSVG(SC.name.vb,SC.name.html,true),
+ bye:wrapSVG(SC.bye.vb,SC.bye.html,true),
+ dA:wrapSVG(SC.p1.vb,SC.p1.html,true),
+ dB:wrapSVG(SC.p2.vb,SC.p2.html,true),
+ dC:wrapSVG(SC.nice.vb,SC.nice.html,true),
+ dD:wrapSVG(SC.p4.vb,SC.p4.html,true),
+ watch:'<div style="font-size:34px">📺</div>',
+ read:'<div style="font-size:34px">📖</div>',
+ repeat:'<div style="font-size:34px">🔁</div>',
+ practise:'<div style="font-size:34px">🎯</div>',
+ write:'<div style="font-size:34px">✏️</div>',
+ match:'<div style="font-size:34px">🧩</div>',
+ pI:'<div style="font-size:34px">🙋</div>',
+ pY:'<div style="font-size:34px">🫵</div>'
+};
+function attachImgFallbacks(scope){
+ (scope||document).querySelectorAll("img[data-fb]").forEach(function(im){
+  if(im._fbSet)return;im._fbSet=true;
+  im.addEventListener("error",function(){
+   var f=FALLBACK[im.getAttribute("data-fb")];if(!f)return;
+   var tmp=document.createElement("div");tmp.innerHTML=f;
+   if(im.parentNode)im.parentNode.replaceChild(tmp.firstChild,im);
+  });
+ });
+}
+attachImgFallbacks(document);
+
+/* ================= VOCAB DATA ================= */
+var V={
+hello:{w:"Hello!",ipa:"/həˈləʊ/",pos:"exclamation",def:"a word you say when you meet someone",ex:["Hello! I'm Maria.","Hello. Are you Helen?"],ru:"привет",img:{t:"s",s:"hello"}},
+hi:{w:"Hi!",ipa:"/haɪ/",pos:"exclamation",def:"a friendly word when you meet friends",ex:["Hi! I'm Tony."],ru:"привет",img:{t:"s",s:"hello"}},
+nice:{w:"Nice to meet you.",ipa:"/ˌnaɪs tə ˈmiːt juː/",pos:"phrase",def:"say this when you meet someone for the first time",ex:["Nice to meet you, Helen."],ru:"приятно познакомиться",img:{t:"s",s:"nice"}},
+minute:{w:"Just a minute.",ipa:"/ˌdʒʌst ə ˈmɪnɪt/",pos:"phrase",def:"wait a very short time, please",ex:["Just a minute, please."],ru:"минутку, подожди",img:{t:"s",s:"minute"}},
+name_q:{w:"What's your name?",ipa:"/wɒts jɔː ˈneɪm/",pos:"phrase",def:"ask this to know a person's name",ex:["What's your name? - Helen."],ru:"как тебя зовут?",img:{t:"s",s:"name"}},
+sorry:{w:"Sorry.",ipa:"/ˈsɒri/",pos:"exclamation",def:"say this when you make a mistake or when you don't hear",ex:["Sorry. I'm Tom, not Dom."],ru:"простите, извините",img:{t:"e",e:"🙏"}},
+thanks:{w:"Thanks.",ipa:"/θæŋks/",pos:"exclamation",def:"say this when someone gives you something",ex:["Your cappuccino. - Thanks."],ru:"спасибо",img:{t:"e",e:"😊"}},
+goodbye:{w:"Goodbye!",ipa:"/ˌɡʊdˈbaɪ/",pos:"exclamation",def:"a word you say when you leave",ex:["Goodbye, Tom. See you on Friday."],ru:"до свидания",img:{t:"s",s:"bye"}},
+bye:{w:"Bye!",ipa:"/baɪ/",pos:"exclamation",def:"a friendly word when you leave",ex:["Bye! See you tomorrow."],ru:"пока",img:{t:"s",s:"bye"}},
+see_tom:{w:"See you tomorrow.",ipa:"/ˌsiː ju təmɒrəʊ/",pos:"phrase",def:"say this when you leave and meet again the next day",ex:["Bye! See you tomorrow."],ru:"до завтра",img:{t:"s",s:"bye"}},
+see_fri:{w:"See you on Friday.",ipa:"/ˌsiː ju n ˈfraɪdeɪ/",pos:"phrase",def:"say this when you leave and meet again on Friday",ex:["Goodbye, Tom. See you on Friday."],ru:"увидимся в пятницу",img:{t:"s",s:"bye"}},
+conversation:{w:"conversation",ipa:"/ˌkɒnvəseɪʃn/",pos:"noun",def:"people talking together",ex:["Listen to the conversation in the coffee shop."],ru:"разговор, диалог",img:{t:"e",e:"💬"}},
+watch:{w:"watch",ipa:"/wɒtʃ/",pos:"verb",def:"look at something for some time (a video, a picture)",ex:["Watch the video again."],ru:"смотреть",img:{t:"e",e:"📺"}},
+read:{w:"read",ipa:"/riːd/",pos:"verb",def:"look at words and understand them",ex:["Read the conversations."],ru:"читать",img:{t:"e",e:"📖"}},
+match:{w:"match",ipa:"/mætʃ/",pos:"verb",def:"put things together that go together",ex:["Match the phrases to the pictures."],ru:"соединять, подбирать пару",img:{t:"e",e:"🧩"}},
+again:{w:"again",ipa:"/əˈɡen/",pos:"adverb",def:"one more time",ex:["Watch the video again."],ru:"снова, ещё раз",img:{t:"e",e:"⏪"}},
+check:{w:"check",ipa:"/tʃek/",pos:"verb",def:"look at your answers to see if they are correct",ex:["Listen again and check."],ru:"проверять",img:{t:"e",e:"🔍"}},
+repeat:{w:"repeat",ipa:"/rɪˈpiːt/",pos:"verb",def:"say something again",ex:["Listen and repeat the sentences."],ru:"повторять",img:{t:"e",e:"🔁"}},
+practise:{w:"practise",ipa:"/ˈpræktɪs/",pos:"verb",def:"say or do something again and again to get better",ex:["Practise the conversations with your teacher."],ru:"отрабатывать, тренироваться",img:{t:"e",e:"🎯"}},
+write:{w:"write",ipa:"/raɪt/",pos:"verb",def:"make words on paper or on the screen",ex:["Write the numbers."],ru:"писать",img:{t:"e",e:"✏️"}},
+say:{w:"say",ipa:"/seɪ/",pos:"verb",def:"speak words",ex:["Say the days of the week."],ru:"сказать, говорить",img:{t:"e",e:"🗣️"}},
+listen:{w:"listen",ipa:"/ˈlɪsn/",pos:"verb",def:"be quiet and hear",ex:["Listen and repeat."],ru:"слушать",img:{t:"e",e:"🎧"}},
+contraction:{w:"contraction",ipa:"/kənˈtrækʃn/",pos:"noun",def:"a short form of two words: I am = I'm",ex:["I'm and you're are contractions."],ru:"сокращённая форма",img:{t:"e",e:"✂️"}},
+example:{w:"example",ipa:"/ɪɡˈzɑːmpl/",pos:"noun",def:"a sentence that shows the rule",ex:["Read the examples in the table."],ru:"пример",img:{t:"e",e:"📌"}},
+question:{w:"question",ipa:"/ˈkwestʃən/",pos:"noun",def:"words that ask something (?)",ex:["Am I in class 2? is a question."],ru:"вопрос",img:{t:"e",e:"❓"}},
+name:{w:"name",ipa:"/neɪm/",pos:"noun",def:"the word for a person or thing: Helen, Tom",ex:["My name is Helen."],ru:"имя, название",img:{t:"e",e:"🏷️"}},
+number:{w:"number",ipa:"/ˈnʌmbə/",pos:"noun",def:"0, 1, 2, 3, 4 ...",ex:["Write the numbers 0-10."],ru:"число, номер",img:{t:"e",e:"🔢"}},
+day:{w:"day",ipa:"/deɪ/",pos:"noun",def:"Monday, Tuesday, Wednesday ...",ex:["What day is your English class?"],ru:"день",img:{t:"e",e:"📅"}},
+week:{w:"week",ipa:"/wiːk/",pos:"noun",def:"seven days: Monday to Sunday",ex:["There are seven days in a week."],ru:"неделя",img:{t:"e",e:"🗓️"}},
+today:{w:"today",ipa:"/təˈdeɪ/",pos:"adverb",def:"this day",ex:["Today is Saturday."],ru:"сегодня",img:{t:"e",e:"📍"}},
+tomorrow:{w:"tomorrow",ipa:"/təˈmɒrəʊ/",pos:"adverb",def:"the day after today",ex:["Bye! See you tomorrow."],ru:"завтра",img:{t:"e",e:"⏭️"}},
+weekend:{w:"the weekend",ipa:"/ðə ˌwiːkˈend/",pos:"noun",def:"Saturday and Sunday",ex:["The weekend is Saturday and Sunday."],ru:"выходные",img:{t:"e",e:"🎈"}},
+class:{w:"class",ipa:"/klɑːs/",pos:"noun",def:"the group of students in a lesson",ex:["I'm in class 3."],ru:"класс",img:{t:"e",e:"🏫"}},
+room:{w:"room",ipa:"/ruːm/",pos:"noun",def:"a place in a building",ex:["You're in room 4."],ru:"комната, кабинет",img:{t:"e",e:"🚪"}},
+teacher:{w:"teacher",ipa:"/ˈtiːtʃə/",pos:"noun",def:"the person who helps you learn",ex:["Hello. I'm your teacher."],ru:"учитель",img:{t:"e",e:"👩"}},
+tea:{w:"a tea",ipa:"/tiː/",pos:"noun",def:"a hot brown drink in a cup",ex:["A tea, please."],ru:"чай",img:{t:"e",e:"🍵"}},
+cappuccino:{w:"a cappuccino",ipa:"/ˌkæpuˈtʃiːnəʊ/",pos:"noun",def:"coffee with warm milk on top",ex:["A cappuccino, please."],ru:"капучино",img:{t:"e",e:"☕"}},
+coffee_shop:{w:"coffee shop",ipa:"/ˈkɒfi ʃɒp/",pos:"noun",def:"a small cafe with coffee and tea",ex:["The conversation is in a coffee shop."],ru:"кофейня, кафе",img:{t:"e",e:"🏪"}},
+complete:{w:"complete",ipa:"/kəmˈpliːt/",pos:"verb",def:"put in the missing words",ex:["Complete with I'm or You're."],ru:"дополнять, заполнять",img:{t:"e",e:"📝"}},
+tick:{w:"tick",ipa:"/tɪk/",pos:"verb",def:"put a tick next to the answer",ex:["Listen and tick the correct photo."],ru:"отмечать галочкой",img:{t:"e",e:"✅"}},
+answer:{w:"answer",ipa:"/ˈɑːnsə/",pos:"noun",def:"what you say or write to a question",ex:["Yes, I am. is an answer."],ru:"ответ",img:{t:"e",e:"💡"}},
+word:{w:"word",ipa:"/wɜːd/",pos:"noun",def:"for example: hello, name, tea",ex:["Read the words in the box."],ru:"слово",img:{t:"e",e:"🔤"}},
+sentence:{w:"sentence",ipa:"/ˈsentəns/",pos:"noun",def:"a group of words: I'm Helen.",ex:["Read the sentences."],ru:"предложение",img:{t:"e",e:"📜"}},
+sound:{w:"sound",ipa:"/saʊnd/",pos:"noun",def:"what you hear: /h/, /aI/, /i:/",ex:["Listen and repeat the sounds."],ru:"звук",img:{t:"e",e:"🔊"}},
+capital:{w:"capital letter",ipa:"/ˈkæpɪtl ˈletə/",pos:"noun",def:"a big letter: A, B, C (not a, b, c)",ex:["Monday starts with a capital letter."],ru:"заглавная буква",img:{t:"e",e:"🔠"}},
+phrase:{w:"phrase",ipa:"/freɪz/",pos:"noun",def:"a small group of words: Just a minute.",ex:["Practise the phrases."],ru:"фраза",img:{t:"e",e:"🗨️"}},
+greet:{w:"greet",ipa:"/ɡriːt/",pos:"verb",def:"say Hello to someone",ex:["Greet your teacher: Hello!"],ru:"здороваться",img:{t:"e",e:"👋"}},
+people:{w:"people",ipa:"/ˈpiːpl/",pos:"noun",def:"men, women and children",ex:["Many people are in the cafe."],ru:"люди",img:{t:"e",e:"👥"}},
+meet:{w:"meet",ipa:"/miːt/",pos:"verb",def:"see someone and say hello for the first time",ex:["Nice to meet you!"],ru:"встречать, знакомиться",img:{t:"e",e:"🤝"}},
+leave:{w:"leave",ipa:"/liːv/",pos:"verb",def:"go away from a room, house or school",ex:["Bye! I leave at 5 o'clock."],ru:"уходить",img:{t:"e",e:"🚶"}},
+greeting:{w:"greeting",ipa:"/ˈɡriːtɪŋ/",pos:"noun",def:"a word you say when you meet someone: Hello! Hi!",ex:["Hello and Hi are greetings."],ru:"приветствие",img:{t:"e",e:"👋"}},
+already:{w:"already",ipa:"/ɔːlˈredi/",pos:"adverb",def:"now, before this moment",ex:["I already know Hello."],ru:"уже",img:{t:"e",e:"✅"}},
+tell:{w:"tell",ipa:"/tel/",pos:"verb",def:"say something to someone",ex:["Tell me your name."],ru:"сказать, рассказать",img:{t:"e",e:"🗣️"}},
+think:{w:"think",ipa:"/θɪŋk/",pos:"verb",def:"have an idea in your head",ex:["I think it is a cafe."],ru:"думать",img:{t:"e",e:"🤔"}},
+maybe:{w:"maybe",ipa:"/ˈmeɪbi/",pos:"adverb",def:"not sure; it can be yes",ex:["Maybe they are friends."],ru:"может быть",img:{t:"e",e:"🤷"}},
+opinion:{w:"opinion",ipa:"/əˈpɪnjən/",pos:"noun",def:"what you think about something",ex:["In my opinion, it is a school."],ru:"мнение",img:{t:"e",e:"💭"}},
+count:{w:"count",ipa:"/kaʊnt/",pos:"verb",def:"say numbers: one, two, three ...",ex:["Count the cups!"],ru:"считать",img:{t:"e",e:"🔢"}},
+picture:{w:"picture",ipa:"/ˈpɪktʃə/",pos:"noun",def:"what you see in a book or on paper; an image",ex:["Look at the picture."],ru:"картинка",img:{t:"e",e:"🖼️"}},
+tap:{w:"tap",ipa:"/tæp/",pos:"verb",def:"touch the screen with your finger",ex:["Tap the word."],ru:"нажимать",img:{t:"e",e:"👆"}},
+drag:{w:"drag",ipa:"/dræɡ/",pos:"verb",def:"move something with your finger or mouse",ex:["Drag the phrase to the photo."],ru:"перетаскивать",img:{t:"e",e:"🖐️"}},
+meaning:{w:"meaning",ipa:"/ˈmiːnɪŋ/",pos:"noun",def:"what a word says; the idea of a word",ex:["What is the meaning of bye?"],ru:"значение",img:{t:"e",e:"💡"}},
+classroom:{w:"classroom",ipa:"/ˈklɑsruːm/",pos:"noun",def:"the room where you have lessons",ex:["We are in the classroom."],ru:"классная комната",img:{t:"e",e:"🪑"}},
+understand:{w:"understand",ipa:"/ˌʌndəˈstænd/",pos:"verb",def:"know what something means",ex:["I understand the task."],ru:"понимать",img:{t:"e",e:"🧠"}},
+paper:{w:"paper",ipa:"/ˈpeɪpə/",pos:"noun",def:"you write and draw on it",ex:["Write on paper, please."],ru:"бумага",img:{t:"e",e:"📄"}},
+video:{w:"video",ipa:"/ˈvɪdiəʊ/",pos:"noun",def:"a moving picture on a phone or computer",ex:["Watch the video."],ru:"видео",img:{t:"e",e:"🎬"}},
+partner:{w:"partner",ipa:"/ˈpɑːtnə/",pos:"noun",def:"the person next to you in class",ex:["Work with a partner."],ru:"партнёр, сосед",img:{t:"e",e:"🧑‍🤝‍🧑"}},
+better:{w:"better",ipa:"/ˈbetə/",pos:"adverb",def:"more good",ex:["Practise and you'll be better!"],ru:"лучше",img:{t:"e",e:"📈"}},
+together:{w:"together",ipa:"/təˈɡeðə/",pos:"adverb",def:"with each other; in one place",ex:["Put the words together."],ru:"вместе",img:{t:"e",e:"🤝"}},
+photo:{w:"photo",ipa:"/ˈfəʊtəʊ/",pos:"noun",def:"a picture made with a camera",ex:["Look at photo A."],ru:"фотография",img:{t:"e",e:"📸"}},
+press:{w:"press",ipa:"/pres/",pos:"verb",def:"click or touch a button",ex:["Press the play button."],ru:"нажимать",img:{t:"e",e:"🔘"}},
+please:{w:"please",ipa:"/pliːz/",pos:"exclamation",def:"a good word when you ask for something",ex:["A tea, please."],ru:"пожалуйста",img:{t:"e",e:"🙏"}},
+put:{w:"put",ipa:"/pʊt/",pos:"verb",def:"move something somewhere",ex:["Put the sentence in the box."],ru:"класть, помещать",img:{t:"e",e:"📥"}},
+correct:{w:"correct",ipa:"/kəˈrekt/",pos:"adjective",def:"right; not wrong",ex:["Choose the correct option."],ru:"правильный; исправлять",img:{t:"e",e:"✔️"}},
+box:{w:"box",ipa:"/bɒks/",pos:"noun",def:"a square place on the screen to put things in",ex:["Put it in the box."],ru:"коробка, поле",img:{t:"e",e:"📦"}},
+person:{w:"person",ipa:"/ˈpɜːsn/",pos:"noun",def:"a man, woman or child",ex:["Who is this person?"],ru:"человек",img:{t:"e",e:"🧍"}},
+long:{w:"long",ipa:"/lɒŋ/",pos:"adjective",def:"not short",ex:["I am is the long form."],ru:"длинный",img:{t:"e",e:"📏"}},
+short:{w:"short",ipa:"/ʃːt/",pos:"adjective",def:"not long",ex:["I'm is the short form."],ru:"короткий",img:{t:"e",e:"📐"}},
+choose:{w:"choose",ipa:"/tʃuːz/",pos:"verb",def:"take one thing you like",ex:["Choose the correct word."],ru:"выбирать",img:{t:"e",e:"👉"}},
+gap:{w:"gap",ipa:"/ɡæp/",pos:"noun",def:"the empty place ___ in a sentence",ex:["Write the word in the gap."],ru:"пропуск",img:{t:"e",e:"⬜"}},
+option:{w:"option",ipa:"/ˈɒpʃn/",pos:"noun",def:"one thing you can choose",ex:["Tap the option."],ru:"вариант",img:{t:"e",e:"🔘"}},
+order_seq:{w:"in order",ipa:"/ɪn ˈɔːdə/",pos:"phrase",def:"the place in a line: first, second, third",ex:["Put the days in order."],ru:"по порядку",img:{t:"e",e:"1️⃣"}},
+order_drink:{w:"order",ipa:"/ˈɔːdə/",pos:"verb",def:"ask for food or drink in a cafe",ex:["A tea, please. = order a tea"],ru:"заказывать",img:{t:"e",e:"🧾"}},
+send:{w:"send",ipa:"/send/",pos:"verb",def:"make something go somewhere",ex:["Send the word back."],ru:"отправлять",img:{t:"e",e:"📤"}},
+hear:{w:"hear",ipa:"/hɪə/",pos:"verb",def:"get a sound in your ears",ex:["Can you hear the music?"],ru:"слышать",img:{t:"e",e:"👂"}},
+voice:{w:"voice",ipa:"/vɔɪs/",pos:"noun",def:"the sound a person makes when speaking",ex:["Listen to the voice."],ru:"голос",img:{t:"e",e:"🎤"}},
+missing:{w:"missing",ipa:"/ˈmɪsɪŋ/",pos:"adjective",def:"not there; not in the sentence",ex:["The missing word is am."],ru:"пропущенный",img:{t:"e",e:"🕳️"}},
+letter:{w:"letter",ipa:"/ˈletə/",pos:"noun",def:"a, b, c ... A, B, C",ex:["H is a letter."],ru:"буква",img:{t:"e",e:"🔤"}},
+spell:{w:"spell",ipa:"/spel/",pos:"verb",def:"say or write the letters of a word",ex:["H-E-L-E-N spells Helen."],ru:"произносить по буквам",img:{t:"e",e:"🔠"}},
+next:{w:"next",ipa:"/nekst/",pos:"adjective",def:"after this one",ex:["What is the next number?"],ru:"следующий",img:{t:"e",e:"⏭️"}},
+digit:{w:"digit",ipa:"/ˈddʒɪt/",pos:"noun",def:"one of 0, 1, 2, 3, 4, 5, 6, 7, 8, 9",ex:["7 is a digit."],ru:"цифра",img:{t:"e",e:"🔢"}},
+cup:{w:"cup",ipa:"/kʌp/",pos:"noun",def:"you drink tea or coffee from it",ex:["Three cups, please."],ru:"чашка, стакан",img:{t:"e",e:"🥤"}},
+finish:{w:"finish",ipa:"/ˈfɪnɪʃ/",pos:"verb",def:"stop; be at the end",ex:["The class finishes at 5."],ru:"заканчивать",img:{t:"e",e:"🏁"}},
+classmate:{w:"classmate",ipa:"/ˈklɑsmeɪt/",pos:"noun",def:"a student in your class",ex:["Mia is my classmate."],ru:"одноклассник",img:{t:"e",e:"🧑‍"}},
+best:{w:"best",ipa:"/best/",pos:"adjective",def:"the most good",ex:["Choose the best phrase."],ru:"лучший",img:{t:"e",e:"🥇"}},
+swap:{w:"swap",ipa:"/swɒp/",pos:"verb",def:"change places: you take A, I take B",ex:["Swap roles with your teacher."],ru:"меняться",img:{t:"e",e:"🔄"}},
+role:{w:"role",ipa:"/rəʊl/",pos:"noun",def:"the person you play in a dialogue",ex:["Play role A."],ru:"роль",img:{t:"e",e:"🎭"}},
+give:{w:"give",ipa:"/ɡɪv/",pos:"verb",def:"put something in someone's hand",ex:["Give me the cup, please."],ru:"давать",img:{t:"e",e:"🎁"}},
+each_other:{w:"each other",ipa:"/ˌiːtʃ ˈʌðə/",pos:"phrase",def:"I do it to you and you do it to me",ex:["We greet each other."],ru:"друг друга",img:{t:"e",e:"🔁"}},
+use:{w:"use",ipa:"/juːz/",pos:"verb",def:"take something and do something with it",ex:["Use the words from the lesson."],ru:"использовать",img:{t:"e",e:"🧰"}},
+remember:{w:"remember",ipa:"/rɪmembə/",pos:"verb",def:"have something in your head again",ex:["I remember the word hello."],ru:"помнить, вспоминать",img:{t:"e",e:"🧠"}},
+form:{w:"form",ipa:"/fɔːm/",pos:"noun",def:"how a word looks: I am / I'm",ex:["I'm is a short form."],ru:"форма",img:{t:"e",e:"📋"}},
+still:{w:"still",ipa:"/stɪl/",pos:"adverb",def:"now, like before",ex:["I still want to practise."],ru:"всё ещё",img:{t:"e",e:"⏳"}},
+want:{w:"want",ipa:"/wɒnt/",pos:"verb",def:"feel: yes, please!",ex:["I want a tea."],ru:"хотеть",img:{t:"e",e:"🙋"}},
+mistake:{w:"mistake",ipa:"/mɪˈsteɪk/",pos:"noun",def:"something wrong; not correct",ex:["Am you is a mistake."],ru:"ошибка",img:{t:"e",e:"⚠️"}},
+dialogue:{w:"dialogue",ipa:"/ˈdaɪəlɒɡ/",pos:"noun",def:"two people talk: A says, B says",ex:["Write a dialogue."],ru:"диалог",img:{t:"e",e:"💬"}},
+notebook:{w:"notebook",ipa:"/ˈnəʊtbʊk/",pos:"noun",def:"a book for writing in class",ex:["Write it in your notebook."],ru:"тетрадь",img:{t:"e",e:"📓"}},
+record:{w:"record",ipa:"/rɪˈkɔːd/",pos:"verb",def:"make audio on a phone to listen later",ex:["Record your voice."],ru:"записывать",img:{t:"e",e:"🎙️"}},
+well_done:{w:"Well done!",ipa:"/ˌwel dʌn/",pos:"phrase",def:"good work!",ex:["Well done! You finished!"],ru:"молодец!",img:{t:"e",e:"🌟"}},
+line:{w:"line",ipa:"/laɪn/",pos:"noun",def:"words from left to right; the next line is under it",ex:["Write 6-8 lines."],ru:"строка",img:{t:"e",e:"📃"}},
+vocabulary:{w:"vocabulary",ipa:"/vəˈkæbjələri/",pos:"noun",def:"the words of a language",ex:["Learn new vocabulary."],ru:"словарный запас",img:{t:"e",e:"📚"}},
+grammar:{w:"grammar",ipa:"/ˈɡræmə/",pos:"noun",def:"how words work together in sentences",ex:["Grammar helps you say sentences."],ru:"грамматика",img:{t:"e",e:"🧠"}},
+verb:{w:"verb",ipa:"/vɜːb/",pos:"noun",def:"an action word: be, go, eat",ex:["Be is a verb."],ru:"глагол",img:{t:"e",e:"🏃"}},
+transcription:{w:"transcription",ipa:"/trænˈskrɪpʃn/",pos:"noun",def:"the sounds of a word in symbols: /həˈləʊ/",ex:["Read the transcription."],ru:"транскрипция",img:{t:"e",e:"🔡"}},
+definition:{w:"definition",ipa:"/ˌdefˈnɪʃn/",pos:"noun",def:"what a word means",ex:["Read the definition."],ru:"определение",img:{t:"e",e:"📖"}},
+translation:{w:"translation",ipa:"/trænzˈleɪʃn/",pos:"noun",def:"the same word in your language",ex:["Open the translation."],ru:"перевод",img:{t:"e",e:"🌐"}},
+full_form:{w:"full form",ipa:"/ˌfʊl ˈfɔːm/",pos:"noun",def:"the long form of a word: I am, you are",ex:["I am is the full form of I'm."],ru:"полная форма",img:{t:"e",e:"📏"}},
+word_order:{w:"word order",ipa:"/ˈwɜːd ɔːdə/",pos:"noun",def:"where words stand in a sentence",ex:["Word order in questions is different."],ru:"порядок слов",img:{t:"e",e:"🔀"}},
+before:{w:"before",ipa:"/bɪˈfɔː/",pos:"preposition",def:"earlier; in front of",ex:["The verb is before the person."],ru:"перед, до",img:{t:"e",e:"⏮️"}},
+real_life:{w:"real life",ipa:"/ˌrɪəl ˈlaɪf/",pos:"phrase",def:"your life, not the book",ex:["Today is real life!"],ru:"реальная жизнь",img:{t:"e",e:"🌍"}},
+first:{w:"first",ipa:"/fɜːst/",pos:"adverb",def:"number 1 in order",ex:["Monday is first."],ru:"сначала, первый",img:{t:"e",e:"1️⃣"}},
+wrong:{w:"wrong",ipa:"/rɒŋ/",pos:"adjective",def:"not correct",ex:["This word is wrong here."],ru:"неправильный",img:{t:"e",e:"❌"}},
+home:{w:"home",ipa:"/həʊm/",pos:"noun",def:"the place where you live",ex:["I am at home."],ru:"дом",img:{t:"e",e:"🏠"}},
+school:{w:"school",ipa:"/skuːl/",pos:"noun",def:"the place where you study",ex:["I am at school."],ru:"школа",img:{t:"e",e:"🏫"}},
+step:{w:"step",ipa:"/step/",pos:"noun",def:"one thing in a list of things to do",ex:["Tick the steps."],ru:"шаг",img:{t:"e",e:"🪜"}},
+ask:{w:"ask",ipa:"/ɑːsk/",pos:"verb",def:"say a question",ex:["Ask: What's your name?"],ru:"спрашивать",img:{t:"e",e:"❓"}},
+drink:{w:"drink",ipa:"/drɪŋk/",pos:"noun",def:"tea, coffee, water, juice",ex:["Your drink is here."],ru:"напиток",img:{t:"e",e:"🥤"}},
+lesson:{w:"lesson",ipa:"/ˈlesn/",pos:"noun",def:"a class time with your teacher",ex:["The lesson is 90 minutes."],ru:"урок",img:{t:"e",e:"⏰"}},
+n0:{w:"zero",ipa:"/ˈzɪərəʊ/",pos:"number",def:"0",ex:["0 = zero"],ru:"ноль",img:{t:"d",d:"0"}},
+n1:{w:"one",ipa:"/wʌn/",pos:"number",def:"1",ex:["1 = one"],ru:"один",img:{t:"d",d:"1"}},
+n2:{w:"two",ipa:"/tuː/",pos:"number",def:"2",ex:["2 = two"],ru:"два",img:{t:"d",d:"2"}},
+n3:{w:"three",ipa:"/θriː/",pos:"number",def:"3",ex:["3 = three"],ru:"три",img:{t:"d",d:"3"}},
+n4:{w:"four",ipa:"/fɔː/",pos:"number",def:"4",ex:["4 = four"],ru:"четыре",img:{t:"d",d:"4"}},
+n5:{w:"five",ipa:"/faɪv/",pos:"number",def:"5",ex:["5 = five"],ru:"пять",img:{t:"d",d:"5"}},
+n6:{w:"six",ipa:"/sɪks/",pos:"number",def:"6",ex:["6 = six"],ru:"шесть",img:{t:"d",d:"6"}},
+n7:{w:"seven",ipa:"/ˈsevn/",pos:"number",def:"7",ex:["7 = seven"],ru:"семь",img:{t:"d",d:"7"}},
+n8:{w:"eight",ipa:"/eɪt/",pos:"number",def:"8",ex:["8 = eight"],ru:"восемь",img:{t:"d",d:"8"}},
+n9:{w:"nine",ipa:"/naɪn/",pos:"number",def:"9",ex:["9 = nine"],ru:"девять",img:{t:"d",d:"9"}},
+n10:{w:"ten",ipa:"/ten/",pos:"number",def:"10",ex:["10 = ten"],ru:"десять",img:{t:"d",d:"10"}},
+dMon:{w:"Monday",ipa:"/ˈmʌndeɪ/",pos:"noun",def:"the first day of the week",ex:["My English class is on Monday."],ru:"понедельник",img:{t:"c",d:"Mon"}},
+dTue:{w:"Tuesday",ipa:"/ˈtjuːzdeɪ/",pos:"noun",def:"the second day of the week",ex:["See you on Tuesday!"],ru:"вторник",img:{t:"c",d:"Tue"}},
+dWed:{w:"Wednesday",ipa:"/ˈwenzdeɪ/",pos:"noun",def:"the third day of the week",ex:["Today is Wednesday."],ru:"среда",img:{t:"c",d:"Wed"}},
+dThu:{w:"Thursday",ipa:"/ˈθɜːzde/",pos:"noun",def:"the fourth day of the week",ex:["Our class is on Thursday."],ru:"четверг",img:{t:"c",d:"Thu"}},
+dFri:{w:"Friday",ipa:"/ˈfraɪdeɪ/",pos:"noun",def:"the fifth day of the week",ex:["Goodbye! See you on Friday."],ru:"пятница",img:{t:"c",d:"Fri"}},
+dSat:{w:"Saturday",ipa:"/ˈsætədeɪ/",pos:"noun",def:"the sixth day of the week (the weekend!)",ex:["I play football on Saturday."],ru:"суббота",img:{t:"c",d:"Sat"}},
+dSun:{w:"Sunday",ipa:"/ˈsʌndeɪ/",pos:"noun",def:"the seventh day of the week (the weekend!)",ex:["Sunday is my favourite day."],ru:"воскресенье",img:{t:"c",d:"Sun"}}
+};
+var SCENE_FILE={
+ hello:"assets/images/hello.png",
+ nice:"assets/images/nice_to_meet_you.png",
+ minute:"assets/images/just_a_minute.png",
+ name:"assets/images/whats_your_name.png",
+ bye:"assets/images/goodbuy.png"
+};
+var VGROUPS=[
+ {h:"Greetings & meeting people",keys:["hello","hi","nice","minute","name_q","sorry","thanks","goodbye","bye","see_tom","see_fri"]},
+ {h:"Classroom language",keys:["conversation","watch","read","match","again","check","repeat","practise","write","say","listen","contraction","example","question","complete","tick","answer","word","sentence","sound","capital","phrase"]},
+ {h:"Numbers 0-10",keys:["n0","n1","n2","n3","n4","n5","n6","n7","n8","n9","n10"]},
+ {h:"Days of the week",keys:["dMon","dTue","dWed","dThu","dFri","dSat","dSun"]}
+];
+
+/* ================= VOCAB MODAL ================= */
+function vimgHTML(im){if(!im)return "";
+ if(im.t==="e")return '<div class="vimg">'+im.e+"</div>";
+ if(im.t==="d")return '<div class="vimg"><span class="dig">'+im.d+"</span></div>";
+ if(im.t==="c")return '<div class="vimg"><span class="cal">📅 '+im.d+"</span></div>";
+ if(im.t==="s"&&SCENE_FILE[im.s])return '<div class="vimg"><img src="'+SCENE_FILE[im.s]+'" data-fb="'+im.s+'" alt=""></div>';
+ var s=SC[im.s];return '<div class="vimg">'+wrapSVG(s.vb,s.html,true)+"</div>";}
+function openVocab(k){var e=V[k];if(!e)return;
+ var exHtml="";for(var i=0;i<e.ex.length;i++){exHtml+='<div class="vex">“'+e.ex[i]+"”</div>";}
+ $("#vcard").innerHTML='<button class="vclose" id="vclose" type="button">✕</button>'+
+  '<div class="vtop">'+vimgHTML(e.img)+
+  '<div><div class="vword">'+e.w+'<span class="vpos">'+e.pos+"</span></div>"+
+  '<div class="vipa">'+e.ipa+"</div>"+
+  '<button class="spk" id="vspk" type="button" style="margin-top:8px">🔊</button></div></div>'+
+  '<p class="vdef"><b>Meaning:</b> '+e.def+"</p>"+exHtml+
+  '<button class="btn ghost" id="vtr" type="button" style="margin-top:12px">View translation</button>'+
+  '<div class="vtr" id="vtrbox">🇷 <b>'+e.ru+"</b></div>";
+ attachImgFallbacks($("#vcard"));
+ $("#ov").classList.add("on");
+ $("#vclose").onclick=function(){$("#ov").classList.remove("on");};
+ $("#vspk").onclick=function(){playVocab(k);};
+ $("#vtr").onclick=function(){var b=$("#vtrbox");b.classList.toggle("on");$("#vtr").textContent=b.classList.contains("on")?"Hide translation":"View translation";};
+ playVocab(k);}
+document.addEventListener("click",function(e){
+ var cw=e.target.closest(".cw");if(cw){e.stopPropagation();e.preventDefault();openVocab(cw.getAttribute("data-v"));return;}
+ var mn=e.target.closest(".mini");if(mn){e.stopPropagation();e.preventDefault();openVocab(mn.getAttribute("data-v"));return;}
+ var sp=e.target.closest(".spk");if(sp){e.stopPropagation();e.preventDefault();
+  var a=sp.getAttribute("data-a");if(a){playVocab(a);return;}
+  var L=sp.getAttribute("data-letter");if(L){playLetter(L);return;}
+  var sl=sp.getAttribute("data-slug");if(sl){playSlug(sl,sp.getAttribute("data-say")||sl);return;}
+  var t=sp.getAttribute("data-say");if(t){speak(t);return;}
+  return;}
+ if(e.target.id==="ov")$("#ov").classList.remove("on");
+});
+document.addEventListener("keydown",function(e){if(e.key==="Escape")$("#ov").classList.remove("on");});
+
+/* ================= SCREEN 1 refs ================= */
+(function(){
+ var grid=$("#vgrid"),html="",idx=0;
+ VGROUPS.forEach(function(g){html+='<div class="cat-h">'+g.h+"</div>";g.keys.forEach(function(k){
+  var em=V[k].img.t==="e"?V[k].img.e:(V[k].img.t==="d"?V[k].img.d:"🖼️");
+  html+='<button class="vitem'+(idx>=10?" hid":"")+'" type="button" data-k="'+k+'"><span class="em">'+em+"</span>"+V[k].w+"</button>";idx++;});});
+ grid.innerHTML=html;
+ grid.addEventListener("click",function(e){var b=e.target.closest(".vitem");if(b)openVocab(b.getAttribute("data-k"));});
+ var full=false;
+ $("#showAll").onclick=function(){full=!full;var items=$$("#vgrid .vitem");items.forEach(function(el,i){el.classList.toggle("hid",!full&&i>=10);});$("#showAll").textContent=full?"Show short list":"Show full list ("+(idx-10)+" more)";};
+ var cur=null;
+ function show(w){$("#cardV").classList.toggle("active",w==="v");$("#cardG").classList.toggle("active",w==="g");$("#refV").classList.toggle("on",w==="v");$("#refG").classList.toggle("on",w==="g");cur=w;}
+ $("#cardV").onclick=function(){if(cur!=="v")show("v");};
+ $("#cardG").onclick=function(){if(cur!=="g")show("g");};
+})();
+
+/* ================= NAV ================= */
+var screens=$$(".screen"),curS=0;
+var NAMES=["Prep","Warm-up","Vocab","Listening","Grammar","Practice","Sounds","Days","Speaking","Review","HW"];
+(function(){var h="";for(var i=0;i<screens.length;i++){h+='<button class="dot" type="button" data-i="'+i+'" title="'+NAMES[i]+'">'+(i+1)+"</button>";}$("#dots").innerHTML=h;})();
+function go(i){curS=Math.max(0,Math.min(screens.length-1,i));screens.forEach(function(s,idx){s.classList.toggle("on",idx===curS);});$$("#dots .dot").forEach(function(d,idx){d.classList.toggle("cur",idx===curS);});$("#navinfo").textContent="Screen "+(curS+1)+" / "+screens.length+" · "+NAMES[curS];$("#prevB").disabled=curS===0;$("#nextB").disabled=curS===screens.length-1;window.scrollTo({top:0,behavior:"smooth"});}
+$("#prevB").onclick=function(){go(curS-1);};
+$("#nextB").onclick=function(){go(curS+1);};
+$("#dots").addEventListener("click",function(e){var d=e.target.closest(".dot");if(d)go(+d.getAttribute("data-i"));});
+go(0);
+
+/* ================= ACTIVITY ENGINES ================= */
+function banner(root,solved,total){var r=root.querySelector(".result");r.classList.add("on");r.textContent="✔ "+solved+" out of "+total+" correct"+(solved<total?" — answers now shown in green":"");}
+function flash(el){el.classList.add("errf");setTimeout(function(){el.classList.remove("errf");},450);}
+function guard(e){return e.target.closest(".cw")||e.target.closest(".mini")||e.target.closest(".spk");}
+
+/* makeMatch: cfg.multi = true allows MANY chips in one zone (zone stays open) */
+function makeMatch(rootId,cfg){
+ var root=document.getElementById(rootId),body=root.querySelector(".actbody");
+ var attempts,selected,solved,lockedItems,lockedZones;
+ function render(){
+  attempts={};selected=null;solved=0;lockedItems={};lockedZones={};
+  root.querySelector(".result").classList.remove("on");
+  var chips="";cfg.items.forEach(function(it){chips+='<div class="chip" tabindex="0" data-id="'+it.id+'" draggable="true">'+it.label+(it.v?'<span class="mini" data-v="'+it.v+'">?</span>':"")+"</div>";});
+  var zones="";cfg.zones.forEach(function(z){zones+='<div class="zwrap"><div class="zone'+(cfg.multi?" multi":"")+'" data-id="'+z.id+'">'+z.html+"</div></div>";});
+  body.innerHTML='<div class="chips">'+chips+'</div><div class="zones '+(cfg.zclass||"c"+Math.min(5,cfg.zones.length))+'">'+zones+"</div>";
+  attachImgFallbacks(body);
+  body.querySelectorAll(".chip").forEach(function(ch){
+   ch.addEventListener("click",function(e){if(guard(e))return;if(ch.classList.contains("locked"))return;
+    if(selected===ch){selected=null;ch.classList.remove("sel");return;}
+    body.querySelectorAll(".chip.sel").forEach(function(c){c.classList.remove("sel");});selected=ch;ch.classList.add("sel");});
+   ch.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();ch.click();}});
+   ch.addEventListener("dragstart",function(e){e.dataTransfer.setData("text/plain",ch.getAttribute("data-id"));});
+  });
+  body.querySelectorAll(".zone").forEach(function(z){
+   z.addEventListener("dragover",function(e){e.preventDefault();});
+   z.addEventListener("drop",function(e){e.preventDefault();var id=e.dataTransfer.getData("text/plain");if(id)validate(id,z);});
+   z.addEventListener("click",function(e){if(guard(e))return;if(selected)validate(selected.getAttribute("data-id"),z);});
+  });
+ }
+ function place(chip,zone){
+  zone.appendChild(chip);chip.classList.remove("sel");chip.classList.add("locked");chip.setAttribute("draggable","false");
+  lockedItems[chip.getAttribute("data-id")]=1;
+  if(!cfg.multi){zone.classList.add("locked");lockedZones[zone.getAttribute("data-id")]=1;}
+ }
+ function validate(id,zone){
+  if(lockedItems[id])return;
+  if(!cfg.multi&&lockedZones[zone.getAttribute("data-id")])return;
+  var chip=body.querySelector('.chip[data-id="'+id+'"]');if(!chip)return;
+  attempts[id]=(attempts[id]||0)+1;
+  if(cfg.pairs[id]===zone.getAttribute("data-id")){solved++;sfxOk();place(chip,zone);selected=null;done();}
+  else{sfxErr();flash(zone);flash(chip);
+   if(attempts[id]>=2){var cz=body.querySelector('.zone[data-id="'+cfg.pairs[id]+'"]');if(cz)place(chip,cz);done();}
+   else if(selected===chip){selected=null;chip.classList.remove("sel");}}
+ }
+ function done(){if(Object.keys(lockedItems).length===cfg.items.length)banner(root,solved,cfg.items.length);}
+ root.querySelector(".rst").onclick=render;render();
+}
+
+function makeChoice(rootId,cfg){
+ var root=document.getElementById(rootId),body=root.querySelector(".actbody");
+ var attempts,solved,doneCount;
+ function render(){
+  attempts={};solved=0;doneCount=0;root.querySelector(".result").classList.remove("on");
+  var h="";cfg.items.forEach(function(it){h+='<div class="qrow" data-id="'+it.id+'"><div class="sent">'+it.pre+'<span class="blank" data-b>___</span>'+(it.post||"")+'</div><div class="opts">';it.options.forEach(function(o){h+='<button class="opt" type="button" data-o="'+o+'">'+o+"</button>";});h+="</div></div>";});
+  body.innerHTML=h;
+  body.querySelectorAll(".qrow").forEach(function(row){
+   var it=null;cfg.items.forEach(function(x){if(x.id===row.getAttribute("data-id"))it=x;});
+   row.querySelectorAll(".opt").forEach(function(op){op.addEventListener("click",function(){
+    if(row.classList.contains("done"))return;
+    attempts[it.id]=(attempts[it.id]||0)+1;
+    if(op.getAttribute("data-o")===it.answer){solved++;sfxOk();row.classList.add("done");row.querySelector("[data-b]").textContent=it.answer;row.querySelectorAll(".opt").forEach(function(o){o.classList.add("locked");});fin();}
+    else{sfxErr();flash(op);
+     if(attempts[it.id]>=2){row.classList.add("done");row.querySelector("[data-b]").textContent=it.answer;row.querySelectorAll(".opt").forEach(function(o){o.classList.add("locked");});fin();}}
+   });});
+   function fin(){doneCount++;if(doneCount===cfg.items.length)banner(root,solved,cfg.items.length);}
+  });
+ }
+ root.querySelector(".rst").onclick=render;render();
+}
+
+function makeOrder(rootId,cfg){
+ var root=document.getElementById(rootId),body=root.querySelector(".actbody");
+ var attempts,solved,doneCount;
+ function render(){
+  attempts={};solved=0;doneCount=0;root.querySelector(".result").classList.remove("on");
+  var h="";cfg.items.forEach(function(it){
+   var pool=shuffle(it.tokens);if(pool.join(" ")===it.tokens.join(" "))pool=shuffle(it.tokens);
+   h+='<div class="qrow" data-id="'+it.id+'"><div class="sent">'+it.prompt+'</div><div class="ansrow" data-ans></div><div class="pool" data-pool>';
+   pool.forEach(function(w,i){h+='<button class="wtok" type="button" data-w="'+w+'" data-i="'+i+'">'+w+"</button>";});
+   h+="</div></div>";});
+  body.innerHTML=h;
+  body.querySelectorAll(".qrow").forEach(function(row){
+   var it=null;cfg.items.forEach(function(x){if(x.id===row.getAttribute("data-id"))it=x;});
+   var ans=row.querySelector("[data-ans]"),pool=row.querySelector("[data-pool]");
+   function check(){
+    if(ans.classList.contains("locked"))return;
+    var cur=[];ans.querySelectorAll(".wtok").forEach(function(b){cur.push(b.getAttribute("data-w"));});
+    if(cur.length!==it.tokens.length)return;
+    if(cur.join(" ")===it.tokens.join(" ")){solved++;sfxOk();ans.classList.add("locked");ans.querySelectorAll(".wtok").forEach(function(b){b.disabled=true;});doneCount++;if(doneCount===cfg.items.length)banner(root,solved,cfg.items.length);}
+    else{attempts[it.id]=(attempts[it.id]||0)+1;sfxErr();flash(ans);
+     if(attempts[it.id]>=2){var rh="";it.tokens.forEach(function(w){rh+='<button class="wtok" type="button" disabled>'+w+"</button>";});ans.innerHTML=rh;ans.classList.add("locked");pool.innerHTML="";doneCount++;if(doneCount===cfg.items.length)banner(root,solved,cfg.items.length);}}
+   }
+   pool.addEventListener("click",function(e){var b=e.target.closest(".wtok");if(!b||ans.classList.contains("locked")||b.disabled)return;pool.removeChild(b);b.classList.add("in");ans.appendChild(b);check();});
+   ans.addEventListener("click",function(e){var b=e.target.closest(".wtok");if(!b||ans.classList.contains("locked")||b.disabled)return;ans.removeChild(b);b.classList.remove("in");pool.appendChild(b);});
+  });
+ }
+ root.querySelector(".rst").onclick=render;render();
+}
+
+function makeWrite(rootId,cfg){
+ var root=document.getElementById(rootId),body=root.querySelector(".actbody");
+ var attempts,solved,doneCount;
+ function norm(s){return s.toLowerCase().trim().replace(/\s+/g," ");}
+ function render(){
+  attempts={};solved=0;doneCount=0;root.querySelector(".result").classList.remove("on");
+  var h="";cfg.items.forEach(function(it){
+   var spkHtml="";
+   if(it.play){var isWord=/^[a-z]+$/i.test(it.play);
+    spkHtml=isWord?'<button class="spk sm" type="button" data-slug="'+it.play+'" data-say="'+it.play+'">🔊</button>':'<button class="spk sm" type="button" data-say="'+it.play+'">🔊</button>';}
+   h+='<div class="qrow" data-id="'+it.id+'"><div class="sent flexrow">'+spkHtml+(it.pre||"")+'<input class="winput" data-in placeholder="…" autocomplete="off">'+(it.post||"")+'</div><div class="hint">press Enter ↵</div></div>';});
+  body.innerHTML=h;
+  body.querySelectorAll(".qrow").forEach(function(row){
+   var it=null;cfg.items.forEach(function(x){if(x.id===row.getAttribute("data-id"))it=x;});
+   var inp=row.querySelector("[data-in]");
+   function fin(){doneCount++;if(doneCount===cfg.items.length)banner(root,solved,cfg.items.length);}
+   function check(){
+    if(inp.classList.contains("locked"))return;
+    var val=norm(inp.value);if(!val)return;
+    attempts[it.id]=(attempts[it.id]||0)+1;
+    var ok=false;it.answers.forEach(function(a){if(norm(a)===val)ok=true;});
+    if(ok){solved++;sfxOk();inp.classList.add("locked");inp.readOnly=true;row.classList.add("done");fin();}
+    else{sfxErr();flash(inp);
+     if(attempts[it.id]>=2){inp.value=it.answers[0];inp.classList.add("locked");inp.readOnly=true;row.classList.add("done");fin();}}
+   }
+   inp.addEventListener("keydown",function(e){if(e.key==="Enter"){e.preventDefault();check();}});
+  });
+ }
+ root.querySelector(".rst").onclick=render;render();
+}
+
+function makeMCQ(rootId,cfg){
+ var root=document.getElementById(rootId),body=root.querySelector(".actbody");
+ var attempts,solved,doneCount;
+ function render(){
+  attempts={};solved=0;doneCount=0;root.querySelector(".result").classList.remove("on");
+  var h="";cfg.items.forEach(function(it){h+='<div class="qrow" data-id="'+it.id+'"><div class="sent">'+it.stem+'</div><div class="opts">';it.options.forEach(function(o){h+='<button class="opt" type="button" data-o="'+o+'">'+o+"</button>";});h+="</div></div>";});
+  body.innerHTML=h;
+  attachImgFallbacks(body);
+  body.querySelectorAll(".qrow").forEach(function(row){
+   var it=null;cfg.items.forEach(function(x){if(x.id===row.getAttribute("data-id"))it=x;});
+   function fin(){doneCount++;if(doneCount===cfg.items.length)banner(root,solved,cfg.items.length);}
+   row.querySelectorAll(".opt").forEach(function(op){op.addEventListener("click",function(){
+    if(row.classList.contains("done"))return;
+    attempts[it.id]=(attempts[it.id]||0)+1;
+    if(op.getAttribute("data-o")===it.answer){solved++;sfxOk();op.classList.add("locked");row.classList.add("done");fin();}
+    else{sfxErr();flash(op);
+     if(attempts[it.id]>=2){row.classList.add("done");row.querySelectorAll(".opt").forEach(function(o){if(o.getAttribute("data-o")===it.answer)o.classList.add("locked");});fin();}}
+   });});
+  });
+ }
+ root.querySelector(".rst").onclick=render;render();
+}
+
+/* ================= SCREEN 3 ================= */
+makeMatch("a3a",{
+ items:[{id:"hello",label:"Hello!",v:"hello"},{id:"nice",label:"Nice to meet you.",v:"nice"},{id:"minute",label:"Just a minute.",v:"minute"},{id:"nameq",label:"What’s your name?",v:"name_q"},{id:"bye",label:"Goodbye!",v:"goodbye"}],
+ zones:[
+  {id:"z1",html:'<img class="zimg" src="assets/images/just_a_minute.png" data-fb="minute" alt="Just a minute.">'},
+  {id:"z2",html:'<img class="zimg" src="assets/images/goodbuy.png" data-fb="bye" alt="Goodbye!">'},
+  {id:"z3",html:'<img class="zimg" src="assets/images/hello.png" data-fb="hello" alt="Hello!">'},
+  {id:"z4",html:'<img class="zimg" src="assets/images/whats_your_name.png" data-fb="name" alt="What’s your name?">'},
+  {id:"z5",html:'<img class="zimg" src="assets/images/nice_to_meet_you.png" data-fb="nice" alt="Nice to meet you.">'}],
+ zclass:"c3",
+ pairs:{hello:"z3",nice:"z5",minute:"z1",nameq:"z4",bye:"z2"}
+});
+makeMatch("a3b",{
+ items:[{id:"watch",label:"watch",v:"watch"},{id:"read",label:"read",v:"read"},{id:"repeat",label:"repeat",v:"repeat"},{id:"practise",label:"practise",v:"practise"},{id:"write",label:"write",v:"write"},{id:"match",label:"match",v:"match"}],
+ zones:[
+  {id:"m1",html:'<img class="zimg contain" src="assets/images/instructions/read.png" data-fb="read" alt="read">'},
+  {id:"m2",html:'<img class="zimg contain" src="assets/images/instructions/write.png" data-fb="write" alt="write">'},
+  {id:"m3",html:'<img class="zimg contain" src="assets/images/instructions/match.png" data-fb="match" alt="match">'},
+  {id:"m4",html:'<img class="zimg contain" src="assets/images/instructions/watch.png" data-fb="watch" alt="watch">'},
+  {id:"m5",html:'<img class="zimg contain" src="assets/images/instructions/repeat.png" data-fb="repeat" alt="repeat">'},
+  {id:"m6",html:'<img class="zimg contain" src="assets/images/instructions/practise.png" data-fb="practise" alt="practise">'}],
+ zclass:"c3",
+ pairs:{watch:"m4",read:"m1",repeat:"m5",practise:"m6",write:"m2",match:"m3"}
+});
+
+/* ================= SCREEN 4 ================= */
+makeMatch("a4",{
+ items:[{id:"c1",label:"1"},{id:"c2",label:"2"},{id:"c3",label:"3"},{id:"c4",label:"4"}],
+ zones:[
+  {id:"A",html:'<span class="badge">A</span><img class="zimg tall" src="assets/images/Dialogue-A.png" data-fb="dA" alt="Photo A">'},
+  {id:"B",html:'<span class="badge">B</span><img class="zimg tall" src="assets/images/Dialogue-B.png" data-fb="dB" alt="Photo B">'},
+  {id:"C",html:'<span class="badge">C</span><img class="zimg tall" src="assets/images/Dialogue-C.png" data-fb="dC" alt="Photo C">'},
+  {id:"D",html:'<span class="badge">D</span><img class="zimg tall" src="assets/images/Dialogue-D.png" data-fb="dD" alt="Photo D">'}],
+ zclass:"c2",
+ pairs:{c1:"C",c2:"A",c3:"D",c4:"B"}
+});
+
+/* ================= SCREEN 5 ================= */
+makeMatch("a5a",{
+ items:[{id:"i1",label:"I’m Helen."},{id:"i2",label:"Yes, I am."},{id:"i3",label:"No, I’m not."},{id:"i4",label:"Am I in class 2?"},{id:"i5",label:"You’re Tom."},{id:"i6",label:"Are you Diana?"},{id:"i7",label:"You aren’t Dom."},{id:"i8",label:"Yes, you are."}],
+ zones:[
+  {id:"I",html:'<img class="zimg contain" src="assets/images/pronouns/I.png" data-fb="pI" alt="I"><div class="zlabel">I (about me)</div>'},
+  {id:"Y",html:'<img class="zimg contain" src="assets/images/pronouns/you.png" data-fb="pY" alt="you"><div class="zlabel">you (the other person)</div>'}],
+ zclass:"c2",
+ pairs:{i1:"I",i2:"I",i3:"I",i4:"I",i5:"Y",i6:"Y",i7:"Y",i8:"Y"}
+});
+makeMatch("a5b",{
+ items:[{id:"f1",label:"I am"},{id:"f2",label:"you are"},{id:"f3",label:"I am not"},{id:"f4",label:"you are not"}],
+ zones:[{id:"s1",html:'<div class="zlabel" style="font-size:19px">I’m</div>'},{id:"s2",html:'<div class="zlabel" style="font-size:19px">I’m not</div>'},{id:"s3",html:'<div class="zlabel" style="font-size:19px">you’re</div>'},{id:"s4",html:'<div class="zlabel" style="font-size:19px">you aren’t</div>'}],
+ zclass:"c4",
+ pairs:{f1:"s1",f2:"s3",f3:"s2",f4:"s4"}
+});
+makeChoice("a5c",{items:[
+ {id:"r1",pre:"I ",post:" Helen.",options:["am","are"],answer:"am"},
+ {id:"r2",pre:"You ",post:" Tom.",options:["am","are"],answer:"are"},
+ {id:"r3",pre:"",post:" I in class 2?",options:["Am","Are"],answer:"Am"},
+ {id:"r4",pre:"",post:" you Mike?",options:["Am","Are"],answer:"Are"}
+]});
+
+/* ================= SCREEN 6 ================= */
+makeChoice("a6a",{items:[
+ {id:"a1",pre:"<b>Leo:</b> Hi! ",post:" Leo. What’s your name?",options:["I’m","You’re"],answer:"I’m"},
+ {id:"a2",pre:"<b>Mia:</b> Hello! ",post:" Mia. Nice to meet you.",options:["I’m","You’re"],answer:"I’m"},
+ {id:"a3",pre:"<b>Leo:</b> Nice to meet you. ",post:" in class 3.",options:["I’m","You’re"],answer:"I’m"},
+ {id:"a4",pre:"<b>Teacher:</b> Hello, Mia. ",post:" in my class.",options:["I’m","You’re"],answer:"You’re"},
+ {id:"a5",pre:"<b>Mia:</b> Yes! ",post:" my teacher.",options:["I’m","You’re"],answer:"You’re"},
+ {id:"a6",pre:"<b>Teacher:</b> And ",post:" in room 4.",options:["I’m","You’re"],answer:"You’re"}
+]});
+makeChoice("a6b",{items:[
+ {id:"b1",pre:"",post:" Tom. I’m Tony.",options:["I’m not","You aren’t"],answer:"I’m not"},
+ {id:"b2",pre:"",post:" in room 5. You’re in room 4.",options:["I’m not","You aren’t"],answer:"You aren’t"},
+ {id:"b3",pre:"",post:" Marina. I’m Marisa.",options:["I’m not","You aren’t"],answer:"I’m not"},
+ {id:"b4",pre:"",post:" in class 2. You’re in class 3.",options:["I’m not","You aren’t"],answer:"You aren’t"}
+]});
+makeOrder("a6c",{items:[
+ {id:"q1",prompt:"You’re Silvia. → ❓",tokens:["Are","you","Silvia?"]},
+ {id:"q2",prompt:"I’m in room 4. → ❓",tokens:["Am","I","in","room","4?"]},
+ {id:"q3",prompt:"I’m in class 3. → ❓",tokens:["Am","I","in","class","3?"]}
+]});
+
+/* ================= SCREEN 7 ================= */
+makeMatch("a7a",{
+ multi:true,
+ items:[
+  {id:"w1",label:'hi <button class="spk sm" type="button" data-slug="hi" data-say="hi">🔊</button>'},
+  {id:"w2",label:'hello <button class="spk sm" type="button" data-slug="hello" data-say="hello">🔊</button>'},
+  {id:"w3",label:'Helen <button class="spk sm" type="button" data-slug="helen" data-say="Helen">🔊</button>'},
+  {id:"w4",label:"I’m "+'<button class="spk sm" type="button" data-slug="im" data-say="I am">🔊</button>'},
+  {id:"w5",label:'nice <button class="spk sm" type="button" data-slug="nice" data-say="nice">🔊</button>'},
+  {id:"w6",label:'five <button class="spk sm" type="button" data-a="n5">🔊</button>'},
+  {id:"w7",label:'nine <button class="spk sm" type="button" data-a="n9">🔊</button>'},
+  {id:"w8",label:'meet <button class="spk sm" type="button" data-slug="meet" data-say="meet">🔊</button>'},
+  {id:"w9",label:'three <button class="spk sm" type="button" data-a="n3">🔊</button>'},
+  {id:"w10",label:'tea <button class="spk sm" type="button" data-a="tea">🔊</button>'},
+  {id:"w11",label:'please <button class="spk sm" type="button" data-slug="please" data-say="please">🔊</button>'}],
+ zones:[{id:"h",html:'<div class="zlabel" style="font-size:22px">/h/</div><div class="small mut">hi, house, hello</div>'},{id:"ai",html:'<div class="zlabel" style="font-size:22px">/aɪ/</div><div class="small mut">bike, nice, five</div>'},{id:"ee",html:'<div class="zlabel" style="font-size:22px">/iː/</div><div class="small mut">tree, meet, tea</div>'}],
+ zclass:"c3",
+ pairs:{w1:"h",w2:"h",w3:"h",w4:"ai",w5:"ai",w6:"ai",w7:"ai",w8:"ee",w9:"ee",w10:"ee",w11:"ee"}
+});
+(function(){var nums=["n0","n1","n2","n3","n4","n5","n6","n7","n8","n9","n10"],h="";
+ nums.forEach(function(k,i){h+='<div class="numchip" data-k="'+k+'"><button class="spk sm" type="button" data-a="'+k+'">🔊</button><span>'+V[k].w+'</span><span class="n">'+i+'</span><span class="mini" data-v="'+k+'">?</span></div>';});
+ $("#numgrid").innerHTML=h;
+ $("#numgrid").addEventListener("click",function(e){if(e.target.closest(".spk")||e.target.closest(".mini")||e.target.closest(".cw"))return;var c=e.target.closest(".numchip");if(c)playVocab(c.getAttribute("data-k"));});
+})();
+(function(){var h="",i;for(i=0;i<26;i++){var L=String.fromCharCode(65+i);h+='<button class="spk ltr" type="button" data-letter="'+L+'" title="hear the letter '+L+'">'+L+"</button>";}
+ $("#ltrgrid").innerHTML=h;})();
+makeWrite("a7b",{items:[
+ {id:"l1",play:"seven",pre:"You hear: ",answers:["seven"]},
+ {id:"l2",play:"three",pre:"You hear: ",answers:["three"]},
+ {id:"l3",play:"zero",pre:"You hear: ",answers:["zero"]},
+ {id:"l4",play:"five",pre:"You hear: ",answers:["five"]},
+ {id:"l5",play:"nine",pre:"You hear: ",answers:["nine"]}
+]});
+makeWrite("a7c",{items:[
+ {id:"x1",play:"one, two",pre:"one, two → ",answers:["three"]},
+ {id:"x2",play:"four, five",pre:"four, five → ",answers:["six"]},
+ {id:"x3",play:"eight, nine",pre:"eight, nine → ",answers:["ten"]}
+]});
+(function(){
+ function cupRow(k){var h='<div class="cups">';k.forEach(function(t){h+=wrapSVG("0 0 78 84",D.cup(39,10,1,t),false).replace('style="width:100%;height:100%;display:block"','style="width:64px;height:70px;display:block"');});h+="</div>";return h;}
+ makeWrite("a7d",{items:[
+  {id:"c1",pre:cupRow(["cap","cap"])+"How many cups? ",answers:["two","2"]},
+  {id:"c2",pre:cupRow(["cap","tea","tea"])+"How many cups? ",answers:["three","3"]},
+  {id:"c3",pre:cupRow(["tea","tea","tea","cap"])+"How many cups? ",answers:["four","4"]}
+ ]});
+})();
+
+/* ================= SCREEN 8 ================= */
+(function(){var days=["dMon","dTue","dWed","dThu","dFri","dSat","dSun"],h="";
+ days.forEach(function(k){h+='<div class="daychip" data-k="'+k+'"><button class="spk sm" type="button" data-a="'+k+'">🔊</button>'+V[k].w+'<span class="mini" data-v="'+k+'">?</span></div>';});
+ $("#dayrow").innerHTML=h;
+ $("#dayrow").addEventListener("click",function(e){if(e.target.closest(".spk")||e.target.closest(".mini")||e.target.closest(".cw"))return;var c=e.target.closest(".daychip");if(c)playVocab(c.getAttribute("data-k"));});
+})();
+makeOrder("a8a",{items:[{id:"d",prompt:"The week:",tokens:["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]}]});
+(function(){
+ var DN=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+ var now=new Date();var t=DN[now.getDay()];var tm=DN[(now.getDay()+1)%7];
+ makeChoice("a8b",{items:[
+  {id:"t1",pre:'<span class="cw" data-v="today">today</span> = ',options:DN.slice(),answer:t},
+  {id:"t2",pre:'<span class="cw" data-v="tomorrow">tomorrow</span> = ',options:DN.slice(),answer:tm},
+  {id:"t3",pre:'the <span class="cw" data-v="weekend">weekend</span> = ',post:" and …",options:DN.slice(),answer:"Saturday"},
+  {id:"t4",pre:"… and ",options:DN.slice(),answer:"Sunday"}
+ ]});
+})();
+makeMCQ("a8c",{items:[
+ {id:"g1",stem:"Your English <span class=\"cw\" data-v=\"class\">class</span> <span class=\"cw\" data-v=\"finish\">finishes</span>. You <span class=\"cw\" data-v=\"leave\">leave</span> and you see your teacher <span class=\"cw\" data-v=\"tomorrow\">tomorrow</span>. You say:",options:["Bye! See you tomorrow.","Nice to meet you.","Just a minute."],answer:"Bye! See you tomorrow."},
+ {id:"g2",stem:'Teacher: "Goodbye, Mia. See you on Friday." You say:',options:["Bye! See you on Friday.","Hello! I’m Mia.","Sorry?"],answer:"Bye! See you on Friday."},
+ {id:"g3",stem:'You <span class="cw" data-v="meet">meet</span> a new <span class="cw" data-v="classmate">classmate</span>. They say: "Nice to meet you." You say:',options:["Nice to meet you.","Goodbye!","I’m not."],answer:"Nice to meet you."}
+]});
+
+/* ================= SCREEN 9 checklist ================= */
+$$("#steps .stepchk").forEach(function(s){s.addEventListener("click",function(e){if(e.target.closest(".cw"))return;s.classList.toggle("on");});});
+
+/* ================= SCREEN 10 ================= */
+makeMCQ("a10",{items:[
+ {id:"r1",stem:"Hello. ___ Helen.",options:["I’m","You’re","Am"],answer:"I’m"},
+ {id:"r2",stem:"___ you Tom?",options:["Are","Am","Is"],answer:"Are"},
+ {id:"r3",stem:"<span class=\"cw\" data-v=\"correct\">Correct</span> the <span class=\"cw\" data-v=\"mistake\">mistake</span>: <i>Am you Helen?</i>",options:["Are you Helen?","Am I Helen?","You’re Helen?"],answer:"Are you Helen?"},
+ {id:"r4",stem:'<img class="stemimg" src="assets/images/nice_to_meet_you.png" data-fb="nice" alt="Two people shake hands">What do you say?',options:["Nice to meet you.","Bye!","Just a minute."],answer:"Nice to meet you."},
+ {id:"r5",stem:'Listen: <button class="spk sm" type="button" data-a="n8">🔊</button> Which number?',options:["8","9","6"],answer:"8"},
+ {id:"r6",stem:"The day after Monday is …",options:["Tuesday","Sunday","Wednesday"],answer:"Tuesday"},
+ {id:"r7",stem:"<i>I’m not</i> is the <span class=\"cw\" data-v=\"contraction\">contraction</span> of …",options:["I am not","you are not","I am"],answer:"I am not"},
+ {id:"r8",stem:"You ___ Dom. You’re Tom!",options:["aren’t","am not","is"],answer:"aren’t"}
+]});
+
+/* ================= SCREEN 11 ================= */
+makeWrite("a11",{items:[
+ {id:"h1",pre:"Hello. I ",post:" Maria.",answers:["am","'m"]},
+ {id:"h2",pre:"You ",post:" my friend.",answers:["are","'re"]},
+ {id:"h3",pre:"I ",post:" not Dom.",answers:["am","'m"]},
+ {id:"h4",pre:"",post:" you Helen?",answers:["Are","are"]},
+ {id:"h5",pre:"You ",post:" in room 3. You’re in room 4.",answers:["aren't","are not","'re not"]}
+]});
+$("#hwtxt").addEventListener("input",function(e){var v=e.target.value;var lines=v?v.split("\n").filter(function(l){return l.trim();}).length:0;var words=v?v.trim().split(/\s+/).filter(Boolean).length:0;$("#hwcount").textContent="Lines: "+lines+" · Words: "+words;});
+</script>
+</body>
+</html>
